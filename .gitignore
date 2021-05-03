@@ -26,6 +26,7 @@ doc/api/
 
 ### Flutter ###
 # Flutter/Dart/Pub related
+flutter/
 **/doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
