@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/app_model.dart';
 import 'package:light_master_app/core/models/light_source.dart';
+import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
@@ -30,23 +31,7 @@ class Home extends StatelessWidget {
                       showCupertinoModalPopup(
                           context: context,
                           builder: (BuildContext bc) {
-                            return Container(
-                                height: 150,
-                                color: Colors.white,
-                                child: new Column(children: [
-                                  Row(children: [
-                                    TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text("Close this"))
-                                  ]),
-                                  Row(children: [
-                                    Text("Text 1"),
-                                    Text("Text 1"),
-                                    Text("Text 1"),
-                                    Text("Text 1"),
-                                    Text("Text 1"),
-                                  ])
-                                ]));
+                            return LightSettingsSheet();
                           });
                     },
                     child: Container(
