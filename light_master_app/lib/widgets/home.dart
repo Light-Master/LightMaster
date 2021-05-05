@@ -20,19 +20,49 @@ class Home extends StatelessWidget {
             sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
               if (index < lightSources.length) {
-                // TODO: return light widgets
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red[500]),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Text("Lights '$index'"),
-                );
+                // TODO: return fancy light widgets
+                return GestureDetector(
+                    onTap: () {
+                      print("switching lights status $index");
+                    },
+                    onLongPress: () {
+                      print("opening color settings $index");
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext bc) {
+                            return Container(
+                                height: 150,
+                                color: Colors.white,
+                                child: new Column(children: [
+                                  Row(children: [
+                                    TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text("Close this"))
+                                  ]),
+                                  Row(children: [
+                                    Text("Text 1"),
+                                    Text("Text 1"),
+                                    Text("Text 1"),
+                                    Text("Text 1"),
+                                    Text("Text 1"),
+                                  ])
+                                ]));
+                          });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.red[500]),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      width: 150,
+                      child: Text("Light $index"),
+                    ));
               } else if (index == lightSources.length) {
-                // for testing purposes
+                // for testing purposes, rm later
                 return Row(mainAxisSize: MainAxisSize.min, children: [
                   Text("this is an example with ${model.lightSources.length}.")
                 ]);
               } else if (index == lightSources.length + 1) {
+                // for testing purposes, rm later
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
