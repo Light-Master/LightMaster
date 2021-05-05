@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/app_model.dart';
 import 'package:light_master_app/core/models/light_source.dart';
+import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,13 @@ class Home extends StatelessWidget {
       return CustomScrollView(
         semanticChildCount: lightSources.length + 2,
         slivers: [
-          const CupertinoSliverNavigationBar(largeTitle: Text('Lights')),
+          CupertinoSliverNavigationBar(
+              largeTitle: Text('Lights'),
+              trailing: TextButton(
+                child: Text("Add"),
+                onPressed: () => showCupertinoModalPopup(
+                    context: context, builder: (BuildContext bc) => AddLight()),
+              )),
           SliverSafeArea(
             top: false,
             minimum: const EdgeInsets.only(top: 8),
