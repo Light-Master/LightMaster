@@ -20,8 +20,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
 
   @override
   Widget build(BuildContext context) {
-    final model =
-        this.lightSourceNameController.text = this.widget.lightSource.name;
+    this.lightSourceNameController.text = this.widget.lightSource.name;
 
     return Container(
         height: 65,
