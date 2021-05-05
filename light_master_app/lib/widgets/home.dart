@@ -31,7 +31,9 @@ class Home extends StatelessWidget {
                       showCupertinoModalPopup(
                           context: context,
                           builder: (BuildContext bc) {
-                            return LightSettingsSheet();
+                            return LightSettingsSheet(
+                              lightSource: lightSources[index],
+                            );
                           });
                     },
                     child: Container(
@@ -52,8 +54,8 @@ class Home extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextButton(
-                        onPressed: () => model
-                            .addLightSource(LightSource("1.1.1.1", "LS x")),
+                        onPressed: () => model.addLightSource(LightSource(
+                            "1.1.1.1", "Light ${lightSources.length}")),
                         child: Text("click me I dare you"))
                   ],
                 );
