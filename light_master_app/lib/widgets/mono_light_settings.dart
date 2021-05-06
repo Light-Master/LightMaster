@@ -15,7 +15,8 @@ class _MonoLightSettingsState extends State<MonoLightSettings> {
   @override
   Widget build(BuildContext context) {
     final double margin = 10;
-    final double padding = 15;
+    final double topPadding = 15;
+    final double sidePadding = 45;
 
     return Consumer<LightSource>(
       builder: (builder, lightSource, child) {
@@ -27,8 +28,8 @@ class _MonoLightSettingsState extends State<MonoLightSettings> {
                 margin:
                     EdgeInsets.only(top: margin, left: margin, right: margin),
                 padding: EdgeInsets.only(
-                    top: padding, left: padding, right: padding),
-                height: 458 + padding,
+                    top: topPadding, left: sidePadding, right: sidePadding),
+                height: 458 + topPadding,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(16))),

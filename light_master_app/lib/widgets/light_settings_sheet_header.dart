@@ -58,8 +58,12 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
               alignment: AlignmentDirectional.centerEnd,
               padding: EdgeInsets.only(right: 15),
               child: TextButton(
-                  child: Text(editing ? "Save" : "Edit",
-                      style: TextStyle(color: fontColor)),
+                  style: ButtonStyle(),
+                  child: Icon(
+                      editing
+                          ? CupertinoIcons.checkmark_alt
+                          : CupertinoIcons.pencil,
+                      color: fontColor),
                   onPressed: () {
                     setState(() => editing = !editing);
                     if (!editing) {
