@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   i18n_extension: ^3.0.0
+  flutter_xlider: ^3.4.0
 
   provider: ^5.0.0
 
