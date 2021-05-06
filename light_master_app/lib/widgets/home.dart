@@ -5,8 +5,12 @@ import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_custom_cards/flutter_custom_cards.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class Home extends StatelessWidget {
+  bool mirror = true;
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -32,7 +36,7 @@ class Home extends StatelessWidget {
                 return GestureDetector(
                     onTap: () {
                       print(
-                          "switching lights status of light ${model.lightSources[index].name} at $index");
+                          " ${model.lightSources[index].item1.name} at $index");
                     },
                     onLongPress: () {
                       print("opening color settings $index");
@@ -40,33 +44,60 @@ class Home extends StatelessWidget {
                           context: context,
                           builder: (BuildContext bc) {
                             return LightSettingsSheet(
-                              lightSource: lightSources[index],
+                              lightSource: lightSources[index].item1,
                             );
                           });
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red[500]),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      width: 150,
-                      child: Text("Light $index"),
-                    ));
+                    child: Stack(children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Row(
+                          children: [
+                            //ImageCard Example
+                            ImageCard(
+                              elevation: 12,
+                              childPadding: 40,
+                              shadowColor: Colors.green,
+                              image: Image.network(
+                                'https://miro.medium.com/max/85/1*ilC2Aqp5sZd1wi0CopD1Hw.png',
+                              ),
+                            ),
+                            ImageCard(
+                              elevation: 8,
+                              shadowColor: Colors.red,
+                              childPadding: 40,
+                              color: Colors.yellow,
+                              image: Image.network(
+                                'https://miro.medium.com/max/85/1*ilC2Aqp5sZd1wi0CopD1Hw.png',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]));
               } else if (index == lightSources.length) {
-                // for testing purposes, rm later
-                return Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text("this is an example with ${model.lightSources.length}.")
-                ]);
-              } else if (index == lightSources.length + 1) {
-                // for testing purposes, rm later
-                return Row(
+                // TODO: for testing purposes, rm later
+                return Align(
+                    child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextButton(
-                        onPressed: () => model.addLightSource(LightSource(
-                            "1.1.1.1", "Light ${lightSources.length}")),
-                        child: Text("click me I dare you"))
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(color: Colors.blue)))),
+                        onPressed: () => {
+                              model.addLightSource(
+                                  LightSource("1.1.1.1",
+                                      "Light ${lightSources.length}"),
+                                  mirror)
+                            },
+                        child: Text("+"))
                   ],
-                );
+                ));
               } else {
                 return null;
               }
