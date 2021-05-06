@@ -100,7 +100,7 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                       children: [
                     Expanded(
                         child: Container(
-                            margin: EdgeInsets.only(top: 10),
+                            margin: EdgeInsets.only(top: 5),
                             color: Color.fromARGB(255, 238, 238, 238),
                             child: settingsWidget))
                   ])),

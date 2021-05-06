@@ -16,8 +16,6 @@ class LightSettingsSheetHeader extends StatefulWidget {
 class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
   bool editing = false;
   final lightSourceNameController = TextEditingController();
-  final lightSourceNameStyle =
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 25);
 
   @override
   void dispose() {
@@ -37,6 +35,15 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
       backgroundColor = Colors.grey[300];
     }
 
+    // based on colorpicker logic
+    Color fontColor =
+        backgroundColor.red + backgroundColor.blue + backgroundColor.green >=
+                370
+            ? Colors.black
+            : Colors.white;
+    TextStyle lightSourceNameStyle =
+        TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: fontColor);
+
     return Container(
         height: 65,
         padding: EdgeInsets.only(bottom: 5),
@@ -49,7 +56,8 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                     topRight: const Radius.circular(35))),
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
-                child: Text(editing ? "Save" : "Edit"),
+                child: Text(editing ? "Save" : "Edit",
+                    style: TextStyle(color: fontColor)),
                 onPressed: () {
                   setState(() => editing = !editing);
                   if (!editing) {
@@ -65,10 +73,9 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                       child: CupertinoTextField(
                           controller: lightSourceNameController,
                           textAlign: TextAlign.center,
-                          style: this.lightSourceNameStyle))
+                          style: lightSourceNameStyle))
                   : Text(this.widget.lightSource.name,
-                      overflow: TextOverflow.fade,
-                      style: this.lightSourceNameStyle))
+                      overflow: TextOverflow.fade, style: lightSourceNameStyle))
         ]));
   }
 

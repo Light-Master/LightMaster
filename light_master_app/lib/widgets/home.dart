@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
                         onPressed: () => model.addLightSource(LightSource(
                             "1.1.1.1",
                             "Light ${lightSources.length}",
-                            SolidLight(Colors.yellow[600]))),
+                            SolidLight(Colors.blue[800]))),
                         child: Text("click me I dare you"))
                   ],
                 );
