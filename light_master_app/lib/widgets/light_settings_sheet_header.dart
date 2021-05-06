@@ -19,6 +19,12 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
       TextStyle(fontWeight: FontWeight.bold, fontSize: 25);
 
   @override
+  void dispose() {
+    this.lightSourceNameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     this.lightSourceNameController.text = this.widget.lightSource.name;
 
@@ -31,7 +37,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                 child: Text(editing ? "Save" : "Edit"),
                 onPressed: () {
                   setState(() => editing = !editing);
-                  if (editing) {
+                  if (!editing) {
                     this.setLightSourceName();
                   }
                 }),
@@ -42,7 +48,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                   ? Container(
                       width: 250,
                       child: CupertinoTextField(
-                          controller: this.lightSourceNameController,
+                          controller: lightSourceNameController,
                           textAlign: TextAlign.center,
                           style: this.lightSourceNameStyle))
                   : Text(this.widget.lightSource.name,
