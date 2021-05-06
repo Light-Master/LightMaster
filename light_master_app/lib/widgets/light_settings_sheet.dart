@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
-import 'package:light_master_app/widgets/effects_light_settings.dart';
 import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
-import 'package:light_master_app/widgets/mono_light_settings.dart';
 
+import 'effects_light_settings.dart';
 import 'light_settings_sheet_header.dart';
+import 'mono_light_settings.dart';
 
 class LightSettingsSheet extends StatefulWidget {
   final LightSource lightSource;
@@ -22,14 +23,32 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
       TextStyle(color: Colors.black, decoration: TextDecoration.underline);
   final unselectedTabStyle = TextStyle(color: Colors.grey);
 
-  _LightSourceMode mode = _LightSourceMode.mono_colour;
+  bool initialBuild = true;
+  _LightSourceMode mode;
 
   @override
   Widget build(BuildContext context) {
+    if (initialBuild) {
+      if (this.widget.lightSource.light == null ||
+          this.widget.lightSource.light is SolidLight) {
+        mode = _LightSourceMode.mono_colour;
+      } else {
+        mode = _LightSourceMode.effect_coloring;
+      }
+      initialBuild = false;
+    }
+
     Widget settingsWidget;
     switch (mode) {
       case _LightSourceMode.mono_colour:
-        settingsWidget = MonoLightSettings();
+        var initialColor = Colors.yellow[600];
+        if (this.widget.lightSource.light is SolidLight) {
+          var solidLight = this.widget.lightSource.light as SolidLight;
+          if (solidLight.color != null) {
+            settingsWidget = MonoLightSettings(solidLight.color);
+          }
+        }
+        settingsWidget = MonoLightSettings(initialColor);
         break;
       case _LightSourceMode.effect_coloring:
         settingsWidget = EffectsLightSettings();

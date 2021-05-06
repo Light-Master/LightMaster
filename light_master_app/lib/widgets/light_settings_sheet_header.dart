@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 
 class LightSettingsSheetHeader extends StatefulWidget {
@@ -28,10 +29,24 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
   Widget build(BuildContext context) {
     this.lightSourceNameController.text = this.widget.lightSource.name;
 
+    Color backgroundColor;
+    if (this.widget.lightSource.light is SolidLight) {
+      var solidLight = this.widget.lightSource.light as SolidLight;
+      backgroundColor = solidLight.color;
+    } else {
+      backgroundColor = Colors.grey[300];
+    }
+
     return Container(
         height: 65,
+        padding: EdgeInsets.only(bottom: 5),
         child: Stack(children: [
           Container(
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(35),
+                    topRight: const Radius.circular(35))),
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
                 child: Text(editing ? "Save" : "Edit"),
