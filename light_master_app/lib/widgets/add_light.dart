@@ -1,63 +1,6 @@
 import 'package:flutter/material.dart';
-
-class AutoDetectLightButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('Auto detect!');
-      },
-      child: Container(
-        height: 50.0,
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.lightGreen[500],
-        ),
-        child: Center(
-          child: Text('Auto Detect'),
-        ),
-      ),
-    );
-  }
-}
-class ManualAddLightButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('Manual Add!');
-      },
-      child: Container(
-        height: 50.0,
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.lightGreen[500],
-        ),
-        child: Center(
-          child: Text('Manual Add'),
-        ),
-      ),
-    );
-  }
-}
-
-class AddLight2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FractionallySizedBox(
-        alignment: Alignment.bottomCenter,
-        widthFactor: 1,
-        heightFactor: 0.5,
-        child: Container(
-            color: Colors.white,
-            child: Column(
-                children: [AutoDetectLightButton(), ManualAddLightButton()])));
-  }
-}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
 
 class AddLight extends StatefulWidget {
   // This class is the configuration for the state.
@@ -71,21 +14,69 @@ class AddLight extends StatefulWidget {
 }
 
 class _CounterState extends State<AddLight> {
-  int _counter = 0;
   ButtonStyle _buttonStyle = ButtonStyle(
-                                minimumSize: MaterialStateProperty.all(Size.fromHeight(1))
-                              );
+      minimumSize: MaterialStateProperty.all(Size.fromHeight(40))
+  );
+  Container _container = Container();
+  bool first = true;
 
-  void _increment() {
+  void _save(){
+
+  }
+
+  void _manualAdd(){
     setState(() {
-      // This call to setState tells the Flutter framework
-      // that something has changed in this State, which
-      // causes it to rerun the build method below so that
-      // the display can reflect the updated values. If you
-      // change _counter without calling setState(), then
-      // the build method won't be called again, and so
-      // nothing would appear to happen.
-      _counter++;
+      _container = Container(
+          child:
+              CupertinoTextField(
+                textAlign: TextAlign.center,
+                placeholder: 'IP',
+              )
+    );
+    });
+  }
+
+  void _autoDetect(){
+    setState(() {
+      if(first == true){
+        _container = Container(
+          child: CircularProgressIndicator()
+        );
+        first = false;
+      }
+      else{
+      _container = Container(
+          child: Expanded( flex: 20, child: SingleChildScrollView(
+                child: FlutterRadioButtonGroup(
+                  items: [
+                    /*put your items here*/
+                    "192.168.1.10",
+                    "192.168.1.11",
+                    "192.168.1.12",
+                    "192.168.1.13",
+                    "192.168.1.14",
+                    "192.168.1.15",
+                    "192.168.1.16",
+                    "192.168.1.17",
+                    "192.168.1.18",
+                    "192.168.1.19",
+                    "192.168.1.20",
+                    "192.168.1.21",
+                    "192.168.1.22",
+                    "192.168.1.23",
+                    "192.168.1.24",
+                    "192.168.1.25",
+                    "192.168.1.26",
+                    "192.168.1.27",
+                    "192.168.1.28",
+                    "192.168.1.29",
+                    "192.168.1.30",
+                  ],
+                )
+          ))
+      );
+      first = true;
+      }
     });
   }
 
@@ -101,24 +92,47 @@ class _CounterState extends State<AddLight> {
         alignment: Alignment.bottomCenter,
         widthFactor: 1,
         heightFactor: 0.5,
-        child:Container(
+        child: Container(
             color: Colors.white,
-            width: double.infinity,
-            child:Column(
+            child: Column(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                CupertinoTextField(
+                  textAlign: TextAlign.center,
+                  placeholder: 'Name',
+                ),
                 ElevatedButton(
-                  style: _buttonStyle,
-                  onPressed: _increment,
-                  child: Text('Auto Detect')
+                    style: _buttonStyle,
+                    onPressed: _autoDetect,
+                    child: Text('Auto Detect')
                 ),
                 ElevatedButton(
                   style: _buttonStyle,
-                  onPressed: _increment,
+                  onPressed: _manualAdd,
                   child: Text('Manual Add'),
                 ),
-                Text('Count: $_counter'),
-      ],
-    )));
+                const Divider(
+                  color: Colors.grey,
+                  height: 20,
+                  thickness: 1,
+                  indent: 0,
+                ),
+                //Spacer(),
+                _container,
+                //Spacer(),
+                const Divider(
+                  color: Colors.grey,
+                  height: 20,
+                  thickness: 1,
+                  indent: 0,
+                ),
+                Spacer(),
+                ElevatedButton(
+                    style: _buttonStyle,
+                    onPressed: _save,
+                    child: Text('Save')
+                )
+              ],
+            )));
   }
 }
