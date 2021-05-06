@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
+import 'package:light_master_app/widgets/light_settings_sheet_navigation.dart';
 import 'package:provider/provider.dart';
 
 import 'effects_light_settings.dart';
@@ -17,34 +18,30 @@ class LightSettingsSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _LightSettingsSheetState();
 }
 
-enum _LightSourceMode { mono_colour, effect_coloring }
+enum LightSourceMode { mono_colour, effect_coloring }
 
 class _LightSettingsSheetState extends State<LightSettingsSheet> {
-  final selectedTabStyle =
-      TextStyle(color: Colors.black, decoration: TextDecoration.underline);
-  final unselectedTabStyle = TextStyle(color: Colors.grey);
-
   bool initialBuild = true;
-  _LightSourceMode mode;
+  LightSourceMode mode;
 
   @override
   Widget build(BuildContext context) {
     if (initialBuild) {
       if (this.widget.lightSource.light == null ||
           this.widget.lightSource.light is SolidLight) {
-        mode = _LightSourceMode.mono_colour;
+        mode = LightSourceMode.mono_colour;
       } else {
-        mode = _LightSourceMode.effect_coloring;
+        mode = LightSourceMode.effect_coloring;
       }
       initialBuild = false;
     }
 
     Widget settingsWidget;
     switch (mode) {
-      case _LightSourceMode.mono_colour:
+      case LightSourceMode.mono_colour:
         settingsWidget = MonoLightSettings();
         break;
-      case _LightSourceMode.effect_coloring:
+      case LightSourceMode.effect_coloring:
         settingsWidget = EffectsLightSettings();
         break;
     }
@@ -64,34 +61,11 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                         topRight: const Radius.circular(35))),
                 child: new Column(children: [
                   LightSettingsSheetHeader(),
-                  Container(
-                      height: 35,
-                      child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                                onPressed: () => setState(
-                                    () => mode = _LightSourceMode.mono_colour),
-                                child: Text("Mono",
-                                    style: mode == _LightSourceMode.mono_colour
-                                        ? selectedTabStyle
-                                        : unselectedTabStyle)),
-                            Container(
-                                margin: EdgeInsets.only(top: 5, bottom: 5),
-                                child: VerticalDivider(
-                                  thickness: 1,
-                                  color: Colors.grey,
-                                )),
-                            TextButton(
-                                onPressed: () => setState(() =>
-                                    mode = _LightSourceMode.effect_coloring),
-                                child: Text("Effects",
-                                    style:
-                                        mode == _LightSourceMode.effect_coloring
-                                            ? selectedTabStyle
-                                            : unselectedTabStyle))
-                          ])),
+                  LightSettingsSheetNavigation(
+                      this.mode,
+                      () => setState(() => mode = LightSourceMode.mono_colour),
+                      () => setState(
+                          () => mode = LightSourceMode.effect_coloring)),
                   Expanded(
                       child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
