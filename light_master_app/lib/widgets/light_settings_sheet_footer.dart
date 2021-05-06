@@ -7,17 +7,31 @@ class LightSettingsSheetFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double buttonWidth = 150;
+
     return Container(
-        padding: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          TextButton(
-              onPressed: () => Navigator.pop(context), child: Text("Cancel")),
-          TextButton(
-              onPressed: () {
-                this.saveCallback();
-                Navigator.pop(context);
-              },
-              child: Text("Save")),
+          Container(
+              width: buttonWidth,
+              child: TextButton(
+                  child: Text("Cancel"),
+                  style: TextButton.styleFrom(
+                      primary: Colors.black, backgroundColor: Colors.grey[300]),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })),
+          Container(
+              width: buttonWidth,
+              child: TextButton(
+                  child: Text("Save"),
+                  onPressed: () {
+                    this.saveCallback();
+                    Navigator.pop(context);
+                  },
+                  style: TextButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Color.fromARGB(255, 116, 128, 255))))
         ]));
   }
 }
