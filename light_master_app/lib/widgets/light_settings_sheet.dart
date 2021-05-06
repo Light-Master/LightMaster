@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/effects_light_settings.dart';
+import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
 import 'package:light_master_app/widgets/mono_light_settings.dart';
-import 'package:light_master_app/widgets/segmented_light_settings.dart';
 
 import 'light_settings_sheet_header.dart';
 
@@ -75,12 +75,22 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                                     ? selectedTabStyle
                                     : unselectedTabStyle))
                       ])),
-              settingsWidget,
-              Row(children: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text("Close this"))
-              ])
+              Expanded(
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                    Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            color: Color.fromARGB(255, 238, 238, 238),
+                            child: settingsWidget))
+                  ])),
+              LightSettingsSheetFooter(onSaveButtonPressed)
             ])));
+  }
+
+  void onSaveButtonPressed() {
+    print("Lightsource saved");
+    // todo: implement save logic here
   }
 }

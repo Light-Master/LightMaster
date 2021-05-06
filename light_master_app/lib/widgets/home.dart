@@ -31,7 +31,8 @@ class Home extends StatelessWidget {
                 // TODO: return fancy light widgets
                 return GestureDetector(
                     onTap: () {
-                      print("switching lights status $index");
+                      print(
+                          "switching lights status of light ${model.lightSources[index].name} at $index");
                     },
                     onLongPress: () {
                       print("opening color settings $index");
