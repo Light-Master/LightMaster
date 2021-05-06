@@ -10,7 +10,8 @@ class LightSource extends ChangeNotifier {
 
   String get name => _name;
   set name(String newValue) {
-    _name = name;
+    _name = newValue;
+    print("Lightsource name set to $_name");
     notifyListeners();
   }
 

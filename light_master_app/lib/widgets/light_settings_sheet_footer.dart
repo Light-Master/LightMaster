@@ -11,7 +11,10 @@ class LightSettingsSheetFooter extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           TextButton(
-              onPressed: () => Navigator.pop(context), child: Text("Cancel")),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancel")),
           TextButton(
               onPressed: () {
                 this.saveCallback();

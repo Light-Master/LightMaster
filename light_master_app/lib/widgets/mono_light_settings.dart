@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:light_master_app/core/models/light.dart';
+import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/color_picker.dart';
+import 'package:provider/provider.dart';
 
 class MonoLightSettings extends StatefulWidget {
-  final Color initialColor;
-
-  MonoLightSettings(this.initialColor);
-
   @override
   State<StatefulWidget> createState() => _MonoLightSettingsState();
 }
@@ -15,25 +14,29 @@ class _MonoLightSettingsState extends State<MonoLightSettings> {
 
   @override
   Widget build(BuildContext context) {
-    double margin = 10;
-    double padding = 15;
+    final double margin = 10;
+    final double padding = 15;
 
-    selectedColor = this.widget.initialColor;
-
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: margin, left: margin, right: margin),
-            padding: EdgeInsets.all(padding),
-            height: 458 + 2 * padding,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(35))),
-            child: LMColorPicker(
-                selectedColor, (newColor) => selectedColor = newColor),
-          ),
-        ]);
+    return Consumer<LightSource>(
+      builder: (builder, lightSource, child) {
+        return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin:
+                    EdgeInsets.only(top: margin, left: margin, right: margin),
+                padding: EdgeInsets.only(
+                    top: padding, left: padding, right: padding),
+                height: 458 + padding,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                child: LMColorPicker((lightSource.light as SolidLight).color,
+                    (newColor) => lightSource.light = SolidLight(newColor)),
+              ),
+            ]);
+      },
+    );
   }
 }
