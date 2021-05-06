@@ -36,13 +36,14 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
       }
 
       // based on colorpicker logic
-      Color fontColor =
+      bool darkColor =
           backgroundColor.red + backgroundColor.blue + backgroundColor.green >=
-                  370
-              ? Colors.black
-              : Colors.white;
+              370;
+      var fontColor = darkColor ? Colors.black : Colors.white;
       TextStyle lightSourceNameStyle = TextStyle(
           fontWeight: FontWeight.bold, fontSize: 25, color: fontColor);
+      var lightSourceNameTextFieldStyle =
+          TextStyle(fontWeight: FontWeight.bold, fontSize: 25);
 
       return Container(
           height: 65,
@@ -55,6 +56,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                       topLeft: const Radius.circular(35),
                       topRight: const Radius.circular(35))),
               alignment: AlignmentDirectional.centerEnd,
+              padding: EdgeInsets.only(right: 15),
               child: TextButton(
                   child: Text(editing ? "Save" : "Edit",
                       style: TextStyle(color: fontColor)),
@@ -67,16 +69,18 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
             ),
             Container(
                 alignment: AlignmentDirectional.center,
-                child: editing
-                    ? Container(
-                        width: 250,
-                        child: CupertinoTextField(
+                child: Container(
+                    width: 250,
+                    child: editing
+                        ? CupertinoTextField(
                             controller: lightSourceNameController,
                             textAlign: TextAlign.center,
-                            style: lightSourceNameStyle))
-                    : Text(lightSource.name,
-                        overflow: TextOverflow.fade,
-                        style: lightSourceNameStyle))
+                            placeholder: "Light name",
+                            style: lightSourceNameTextFieldStyle)
+                        : Text(lightSource.name,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.fade,
+                            style: lightSourceNameStyle)))
           ]));
     });
   }
