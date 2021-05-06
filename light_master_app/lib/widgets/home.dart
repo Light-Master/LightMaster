@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/app_model.dart';
+import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
@@ -31,7 +32,8 @@ class Home extends StatelessWidget {
                 // TODO: return fancy light widgets
                 return GestureDetector(
                     onTap: () {
-                      print("switching lights status $index");
+                      print(
+                          "switching lights status of light ${model.lightSources[index].name} at $index");
                     },
                     onLongPress: () {
                       print("opening color settings $index");
@@ -62,7 +64,9 @@ class Home extends StatelessWidget {
                   children: [
                     TextButton(
                         onPressed: () => model.addLightSource(LightSource(
-                            "1.1.1.1", "Light ${lightSources.length}")),
+                            "1.1.1.1",
+                            "Light ${lightSources.length}",
+                            SolidLight(Colors.blue[800]))),
                         child: Text("click me I dare you"))
                   ],
                 );
