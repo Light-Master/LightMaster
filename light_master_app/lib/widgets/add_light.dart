@@ -14,40 +14,32 @@ class AddLight extends StatefulWidget {
 }
 
 class _CounterState extends State<AddLight> {
-  ButtonStyle _buttonStyle = ButtonStyle(
-      minimumSize: MaterialStateProperty.all(Size.fromHeight(40))
-  );
+  ButtonStyle _buttonStyle =
+      ButtonStyle(minimumSize: MaterialStateProperty.all(Size.fromHeight(40)));
   Container _container = Container();
   bool first = true;
 
-  void _save(){
-
-  }
-
-  void _manualAdd(){
+  void _manualAdd() {
     setState(() {
       _container = Container(
-          child:
-              CupertinoTextField(
-                textAlign: TextAlign.center,
-                placeholder: 'IP',
-              )
-    );
+          child: CupertinoTextField(
+        textAlign: TextAlign.center,
+        placeholder: 'IP',
+      ));
     });
   }
 
-  void _autoDetect(){
+  void _autoDetect() {
     setState(() {
-      if(first == true){
-        _container = Container(
-          child: CircularProgressIndicator()
-        );
+      if (first == true) {
+        _container = Container(child: CircularProgressIndicator());
         first = false;
-      }
-      else{
-      _container = Container(
-          child: Expanded( flex: 20, child: SingleChildScrollView(
-                child: FlutterRadioButtonGroup(
+      } else {
+        _container = Container(
+            child: Expanded(
+                flex: 20,
+                child: SingleChildScrollView(
+                    child: FlutterRadioButtonGroup(
                   items: [
                     /*put your items here*/
                     "192.168.1.10",
@@ -72,10 +64,8 @@ class _CounterState extends State<AddLight> {
                     "192.168.1.29",
                     "192.168.1.30",
                   ],
-                )
-          ))
-      );
-      first = true;
+                ))));
+        first = true;
       }
     });
   }
@@ -104,8 +94,7 @@ class _CounterState extends State<AddLight> {
                 ElevatedButton(
                     style: _buttonStyle,
                     onPressed: _autoDetect,
-                    child: Text('Auto Detect')
-                ),
+                    child: Text('Auto Detect')),
                 ElevatedButton(
                   style: _buttonStyle,
                   onPressed: _manualAdd,
@@ -129,9 +118,8 @@ class _CounterState extends State<AddLight> {
                 Spacer(),
                 ElevatedButton(
                     style: _buttonStyle,
-                    onPressed: _save,
-                    child: Text('Save')
-                )
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Save'))
               ],
             )));
   }
