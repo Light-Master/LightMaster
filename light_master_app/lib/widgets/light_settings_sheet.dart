@@ -67,15 +67,19 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                       () => setState(
                           () => mode = LightSourceMode.effect_coloring)),
                   Expanded(
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                        Expanded(
-                            child: Container(
-                                margin: EdgeInsets.only(top: 5),
-                                color: Color.fromARGB(255, 225, 225, 225),
-                                child: settingsWidget))
-                      ])),
+                      child: Container(
+                          margin: EdgeInsets.only(top: 5),
+                          color: Color.fromARGB(255, 225, 225, 225),
+                          child: CustomScrollView(
+                            scrollDirection: Axis.vertical,
+                            slivers: [
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Container(child: settingsWidget)
+                                ].toList()),
+                              )
+                            ],
+                          ))),
                   Consumer<LightSource>(builder: (context, lightSource, child) {
                     return LightSettingsSheetFooter(() {
                       this.widget.lightSource.name = lightSource.name;
