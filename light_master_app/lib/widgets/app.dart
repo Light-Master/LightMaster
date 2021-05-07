@@ -13,6 +13,11 @@ class App extends StatelessWidget {
 
     return CupertinoApp(
         theme: const CupertinoThemeData(brightness: Brightness.light),
-        home: Home());
+        home: Home(),
+        localizationsDelegates: [
+          DefaultCupertinoLocalizations.delegate,
+          DefaultMaterialLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate
+        ]);
   }
 }

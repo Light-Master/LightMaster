@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
-import 'package:light_master_app/widgets/effects_light_settings.dart';
-import 'package:light_master_app/widgets/mono_light_settings.dart';
-import 'package:light_master_app/widgets/segmented_light_settings.dart';
+import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
+import 'package:light_master_app/widgets/light_settings_sheet_navigation.dart';
+import 'package:provider/provider.dart';
+
+import 'effects_light_settings.dart';
+import 'light_settings_sheet_header.dart';
+import 'mono_light_settings.dart';
 
 class LightSettingsSheet extends StatefulWidget {
   final LightSource lightSource;
@@ -13,59 +18,70 @@ class LightSettingsSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _LightSettingsSheetState();
 }
 
-enum _LightSourceMode { mono_colour, segmented_colour, effect }
+enum LightSourceMode { mono_colour, effect_coloring }
 
 class _LightSettingsSheetState extends State<LightSettingsSheet> {
-  _LightSourceMode mode = _LightSourceMode.mono_colour;
+  bool initialBuild = true;
+  LightSourceMode mode;
 
   @override
   Widget build(BuildContext context) {
+    if (initialBuild) {
+      if (this.widget.lightSource.light == null ||
+          this.widget.lightSource.light is SolidLight) {
+        mode = LightSourceMode.mono_colour;
+      } else {
+        mode = LightSourceMode.effect_coloring;
+      }
+      initialBuild = false;
+    }
+
     Widget settingsWidget;
     switch (mode) {
-      case _LightSourceMode.mono_colour:
+      case LightSourceMode.mono_colour:
         settingsWidget = MonoLightSettings();
         break;
-      case _LightSourceMode.segmented_colour:
-        settingsWidget = SegmentedLightSettings();
-        break;
-      case _LightSourceMode.effect:
+      case LightSourceMode.effect_coloring:
         settingsWidget = EffectsLightSettings();
         break;
     }
 
-    return FractionallySizedBox(
-        alignment: Alignment.bottomCenter,
-        widthFactor: 1,
-        heightFactor: 0.75,
-        child: Container(
-            color: Colors.white,
-            child: new Column(children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text(widget.lightSource.name)]),
-              Row(children: [
-                TextButton(
-                    onPressed: () => setState(() {
-                          mode = _LightSourceMode.mono_colour;
-                        }),
-                    child: Text("Mono")),
-                TextButton(
-                    onPressed: () => setState(() {
-                          mode = _LightSourceMode.segmented_colour;
-                        }),
-                    child: Text("Segments")),
-                TextButton(
-                    onPressed: () => setState(() {
-                          mode = _LightSourceMode.effect;
-                        }),
-                    child: Text("Effects"))
-              ]),
-              settingsWidget,
-              Row(children: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text("Close this"))
-              ])
-            ])));
+    return ChangeNotifierProvider.value(
+        value: LightSource(this.widget.lightSource.networkAddress,
+            this.widget.lightSource.name, this.widget.lightSource.light),
+        child: FractionallySizedBox(
+            alignment: Alignment.bottomCenter,
+            widthFactor: 1,
+            heightFactor: 0.875,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(35),
+                        topRight: const Radius.circular(35))),
+                child: new Column(children: [
+                  LightSettingsSheetHeader(),
+                  LightSettingsSheetNavigation(
+                      this.mode,
+                      () => setState(() => mode = LightSourceMode.mono_colour),
+                      () => setState(
+                          () => mode = LightSourceMode.effect_coloring)),
+                  Expanded(
+                      child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                        Expanded(
+                            child: Container(
+                                margin: EdgeInsets.only(top: 5),
+                                color: Color.fromARGB(255, 225, 225, 225),
+                                child: settingsWidget))
+                      ])),
+                  Consumer<LightSource>(builder: (context, lightSource, child) {
+                    return LightSettingsSheetFooter(() {
+                      this.widget.lightSource.name = lightSource.name;
+                      this.widget.lightSource.light = lightSource.light;
+                    });
+                  })
+                ]))));
   }
 }
