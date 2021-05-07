@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/app_model.dart';
+import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
@@ -17,6 +18,7 @@ class Home extends StatelessWidget {
         child: Consumer<AppModel>(builder: (context, model, child) {
       final lightSources = model.lightSources;
       return CustomScrollView(
+        // TODO: remove +2
         semanticChildCount: lightSources.length + 2,
         slivers: [
           CupertinoSliverNavigationBar(
@@ -91,8 +93,10 @@ class Home extends StatelessWidget {
                                     side: BorderSide(color: Colors.blue)))),
                         onPressed: () => {
                               model.addLightSource(
-                                  LightSource("1.1.1.1",
-                                      "Light ${lightSources.length}"),
+                                  LightSource(
+                                      "1.1.1.1",
+                                      "Light ${lightSources.length}",
+                                      SolidLight(Colors.blue[800])),
                                   mirror)
                             },
                         child: Text("+"))
