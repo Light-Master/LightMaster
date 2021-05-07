@@ -30,8 +30,11 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  flutter_svg: ^0.22.0
+  flutter_custom_cards: ^0.1.0
+  tuple: ^2.0.0
+  scroll_to_index: ^1.0.6
   cupertino_icons: ^1.0.3
-
   flutter_colorpicker: ^0.4.0
 
 dev_dependencies:
@@ -62,7 +65,7 @@ flutter:
     # - assets/html/license_agreement.html
 
     # images 
-    - assets/images/wled_logo_akemi.png
+    - assets/images/150.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
