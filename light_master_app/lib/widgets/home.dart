@@ -54,8 +54,7 @@ class Home extends StatelessWidget {
                             );
                           });
                     },
-                    child: Text(
-                        "test") /*Stack(children: <Widget>[
+                    child: Stack(children: <Widget>[
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -82,8 +81,7 @@ class Home extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ])*/
-                    );
+                    ]));
               } else if (index == lightSources.length) {
                 // TODO: for testing purposes, rm later
                 return Align(
