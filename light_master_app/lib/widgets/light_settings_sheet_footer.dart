@@ -29,21 +29,23 @@ class _LightSettingsSheetFooterState extends State<LightSettingsSheetFooter> {
             BoxDecoration(color: CupertinoColors.lightBackgroundGray));
 
     return Column(children: [
-      // FlutterSlider(
-      //   values: [_brightnessValue],
-      //   max: 255,
-      //   min: 0,
-      //   onDragging: (handlerIndex, lowerValue, upperValue) =>
-      //       setState(() => _brightnessValue = lowerValue),
-      //   trackBar: sliderTrackBar,
-      //   handler: FlutterSliderHandler(
-      //     child: Icon(
-      //       CupertinoIcons.brightness,
-      //       color: CupertinoColors.darkBackgroundGray,
-      //       size: 24,
-      //     ),
-      //   ),
-      // ),
+      ConstrainedBox(
+          constraints: BoxConstraints.tightForFinite(height: 40),
+          child: FlutterSlider(
+            values: [_brightnessValue],
+            max: 255,
+            min: 0,
+            onDragging: (handlerIndex, lowerValue, upperValue) =>
+                setState(() => _brightnessValue = lowerValue),
+            trackBar: sliderTrackBar,
+            handler: FlutterSliderHandler(
+              child: Icon(
+                CupertinoIcons.brightness,
+                color: CupertinoColors.darkBackgroundGray,
+                size: 24,
+              ),
+            ),
+          )),
       // FlutterSlider(
       //   values: [_speedValue],
       //   max: 255,
