@@ -50,42 +50,27 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
         value: LightSource(this.widget.lightSource.networkAddress,
             this.widget.lightSource.name, this.widget.lightSource.light),
         child: FractionallySizedBox(
-            alignment: Alignment.bottomCenter,
-            widthFactor: 1,
             heightFactor: 0.875,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(35),
-                        topRight: const Radius.circular(35))),
-                child: new Column(children: [
-                  LightSettingsSheetHeader(),
-                  LightSettingsSheetNavigation(
-                      this.mode,
-                      () => setState(() => mode = LightSourceMode.mono_colour),
-                      () => setState(
-                          () => mode = LightSourceMode.effect_coloring)),
-                  Expanded(
-                      child: Container(
-                          margin: EdgeInsets.only(top: 5),
-                          color: Color.fromARGB(255, 225, 225, 225),
-                          child: CustomScrollView(
-                            scrollDirection: Axis.vertical,
-                            slivers: [
-                              SliverList(
-                                delegate: SliverChildListDelegate([
-                                  Container(child: settingsWidget)
-                                ].toList()),
-                              )
-                            ],
-                          ))),
-                  Consumer<LightSource>(builder: (context, lightSource, child) {
-                    return LightSettingsSheetFooter(() {
-                      this.widget.lightSource.name = lightSource.name;
-                      this.widget.lightSource.light = lightSource.light;
-                    });
-                  })
-                ]))));
+            alignment: Alignment.bottomCenter,
+            child: SizedBox.expand(
+                child: Container(
+                    child: Column(children: [
+              LightSettingsSheetHeader(),
+              LightSettingsSheetNavigation(
+                  this.mode,
+                  () => setState(() => mode = LightSourceMode.mono_colour),
+                  () => setState(() => mode = LightSourceMode.effect_coloring)),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(top: 2, bottom: 2),
+                      color: Color.fromARGB(255, 225, 225, 225),
+                      child: settingsWidget)),
+              Consumer<LightSource>(builder: (context, lightSource, child) {
+                return LightSettingsSheetFooter(() {
+                  this.widget.lightSource.name = lightSource.name;
+                  this.widget.lightSource.light = lightSource.light;
+                });
+              })
+            ])))));
   }
 }

@@ -41,16 +41,21 @@ class Home extends StatelessWidget {
                           " ${model.lightSources[index].item1.name} at $index");
                     },
                     onLongPress: () {
-                      print("opening color settings $index");
-                      showCupertinoModalPopup(
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(35),
+                                  topRight: const Radius.circular(35))),
                           context: context,
+                          isScrollControlled: true,
                           builder: (BuildContext bc) {
                             return LightSettingsSheet(
                               lightSource: lightSources[index].item1,
                             );
                           });
                     },
-                    child: Stack(children: <Widget>[
+                    child: Text(
+                        "test") /*Stack(children: <Widget>[
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -77,7 +82,8 @@ class Home extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ]));
+                    ])*/
+                    );
               } else if (index == lightSources.length) {
                 // TODO: for testing purposes, rm later
                 return Align(
