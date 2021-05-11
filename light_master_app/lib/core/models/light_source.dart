@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/light.dart';
 
 class LightSource extends ChangeNotifier {
-  final String networkAddress;
+  String networkAddress;
   String _name;
   Light _light;
 
@@ -10,6 +10,7 @@ class LightSource extends ChangeNotifier {
 
   String get name => _name;
   set name(String newValue) {
+    print("light source name set to $newValue");
     _name = newValue;
     notifyListeners();
   }

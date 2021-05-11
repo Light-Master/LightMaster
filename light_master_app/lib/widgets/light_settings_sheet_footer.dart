@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
 class LightSettingsSheetFooter extends StatefulWidget {
-  final VoidCallback saveCallback;
+  final VoidCallback cancelCallback;
 
-  LightSettingsSheetFooter(this.saveCallback);
+  LightSettingsSheetFooter(this.cancelCallback);
 
   @override
   _LightSettingsSheetFooterState createState() =>
@@ -86,14 +86,14 @@ class _LightSettingsSheetFooterState extends State<LightSettingsSheetFooter> {
                     primary: Colors.black, backgroundColor: Colors.grey[300]),
                 onPressed: () {
                   Navigator.pop(context);
+                  this.widget.cancelCallback();
                 })),
         Container(
             padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
             width: buttonWidth,
             child: TextButton(
-                child: Text("Save"),
+                child: Text("Close"),
                 onPressed: () {
-                  this.widget.saveCallback();
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(

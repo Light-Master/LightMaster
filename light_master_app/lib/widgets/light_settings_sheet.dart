@@ -11,8 +11,12 @@ import 'mono_light_settings.dart';
 
 class LightSettingsSheet extends StatefulWidget {
   final LightSource lightSource;
+  final LightSource lightSourceCopy;
 
-  LightSettingsSheet({Key key, this.lightSource}) : super(key: key);
+  LightSettingsSheet({Key key, this.lightSource})
+      : this.lightSourceCopy = LightSource(
+            lightSource.networkAddress, lightSource.name, lightSource.light),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LightSettingsSheetState();
@@ -47,8 +51,7 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
     }
 
     return ChangeNotifierProvider.value(
-        value: LightSource(this.widget.lightSource.networkAddress,
-            this.widget.lightSource.name, this.widget.lightSource.light),
+        value: this.widget.lightSource,
         child: FractionallySizedBox(
             heightFactor: 0.875,
             alignment: Alignment.bottomCenter,
@@ -67,8 +70,10 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                       child: settingsWidget)),
               Consumer<LightSource>(builder: (context, lightSource, child) {
                 return LightSettingsSheetFooter(() {
-                  this.widget.lightSource.name = lightSource.name;
-                  this.widget.lightSource.light = lightSource.light;
+                  lightSource.networkAddress =
+                      this.widget.lightSourceCopy.networkAddress;
+                  lightSource.name = this.widget.lightSourceCopy.name;
+                  lightSource.light = this.widget.lightSourceCopy.light;
                 });
               })
             ])))));

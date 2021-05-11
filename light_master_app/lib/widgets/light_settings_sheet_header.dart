@@ -62,10 +62,12 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                           : CupertinoIcons.pencil,
                       color: fontColor),
                   onPressed: () {
-                    setState(() => editing = !editing);
-                    if (!editing) {
+                    if (editing) {
+                      print(
+                          "new lightsource name: ${this.lightSourceNameController.text}");
                       lightSource.name = this.lightSourceNameController.text;
                     }
+                    setState(() => editing = !editing);
                   }),
             ),
             Container(
