@@ -11,7 +11,7 @@ class SolidLight extends Light {
 }
 
 class EffectLight extends Light {
-  final String effect;
+  final Effect effect;
   final double brightness;
   final double speed;
 

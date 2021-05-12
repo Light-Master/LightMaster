@@ -5,13 +5,14 @@ import 'package:flutter_xlider/flutter_xlider.dart';
 typedef void OnSliderValueChanged(double);
 
 class LMSlider extends StatefulWidget {
+  final double initialValue;
   final double minValue;
   final double maxValue;
   final Icon sliderIcon;
   final OnSliderValueChanged onSliderValueChanged;
 
-  LMSlider(
-      this.minValue, this.maxValue, this.sliderIcon, this.onSliderValueChanged);
+  LMSlider(this.initialValue, this.minValue, this.maxValue, this.sliderIcon,
+      this.onSliderValueChanged);
 
   @override
   State<StatefulWidget> createState() => _LMSliderState();
