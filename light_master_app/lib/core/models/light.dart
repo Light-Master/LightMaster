@@ -12,8 +12,10 @@ class SolidLight extends Light {
 
 class EffectLight extends Light {
   final String effect;
+  final double brightness;
+  final double speed;
 
-  EffectLight(this.effect);
+  EffectLight(this.effect, this.brightness, this.speed);
 }
 
 enum Effect {

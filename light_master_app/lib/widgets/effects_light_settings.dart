@@ -1,46 +1,93 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
+import 'package:light_master_app/widgets/slider.dart';
 import 'package:provider/provider.dart';
 
 class EffectsLightSettings extends StatelessWidget {
+  final roundedCardDecoration = BoxDecoration(
+      color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(16)));
+
+  final sliderIconColor = CupertinoColors.darkBackgroundGray;
+  final double sliderIconSize = 24;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(children: [
-          Expanded(
-              child: Container(color: Colors.blue, child: Text("test row 1")))
-        ]),
-        Expanded(
-            child: Container(
-                color: Colors.red,
-                child: ListView(
-                  children: [
-                    Text("test1"),
-                    Text("test1"),
-                    Text("test1"),
-                    Text("test1"),
-                    Text("test1")
-                  ],
-                )))
-        // Consumer<LightSource>(
-        //     builder: (builder, lightSource, child) => Material(
-        //         child: ListView(
-        //             children: Effect.values
-        //                 .map((e) => ListTile(
-        //                     title: Text(
-        //                       e.toString(),
-        //                     ),
-        //                     trailing: (Icon(
-        //                       CupertinoIcons.checkmark_alt,
-        //                       color: Colors.blue,
-        //                     ))))
-        //                 .toList())))
-      ],
-    );
+    return Consumer<LightSource>(
+        builder: (builder, lightSource, child) => Column(children: [
+              Row(children: [
+                Expanded(
+                    child: Container(
+                        decoration: roundedCardDecoration,
+                        margin: EdgeInsets.only(top: 8, left: 10, right: 10),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: LMSlider(
+                                        0,
+                                        100,
+                                        Icon(
+                                          CupertinoIcons.brightness,
+                                          color: sliderIconColor,
+                                          size: sliderIconSize,
+                                        ),
+                                        (newValue) => print(
+                                            "setting effect brightness to $newValue")))
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: LMSlider(
+                                        0,
+                                        100,
+                                        Icon(
+                                          CupertinoIcons.speedometer,
+                                          color: sliderIconColor,
+                                          size: sliderIconSize,
+                                        ),
+                                        (newValue) => print(
+                                            "setting effect speed to $newValue")))
+                              ],
+                            )
+                          ],
+                        )))
+              ]),
+              Expanded(
+                  child: Container(
+                      decoration: roundedCardDecoration,
+                      margin: EdgeInsets.only(
+                          top: 10, left: 10, right: 10, bottom: 8),
+                      child: ListView(
+                        children: Effect.values
+                            .map((e) => ListTile(
+                                title: Text(
+                                  e.toString(),
+                                ),
+                                trailing: (Icon(
+                                  CupertinoIcons.checkmark_alt,
+                                  color: Colors.blue,
+                                ))))
+                            .toList(),
+                      )))
+            ]));
+    // Consumer<LightSource>(
+    //     builder: (builder, lightSource, child) => Material(
+    //         child: ListView(
+    //             children: Effect.values
+    //                 .map((e) => ListTile(
+    //                     title: Text(
+    //                       e.toString(),
+    //                     ),
+    //                     trailing: (Icon(
+    //                       CupertinoIcons.checkmark_alt,
+    //                       color: Colors.blue,
+    //                     ))))
+    //                 .toList())))
   }
 }
 
