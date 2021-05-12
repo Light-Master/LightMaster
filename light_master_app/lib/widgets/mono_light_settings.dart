@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 import 'color_picker.dart';
 
 class MonoLightSettings extends StatelessWidget {
+  final double verticalMargin = 8;
+  final double horizontalMargin = 10;
+
   @override
   Widget build(BuildContext context) {
-    final double verticalMargin = 8;
-    final double horizontalMargin = 10;
-
     var color = Colors.yellow[600];
 
     return CustomScrollView(
