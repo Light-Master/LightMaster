@@ -6,6 +6,8 @@ import 'package:light_master_app/widgets/slider.dart';
 import 'package:provider/provider.dart';
 
 class EffectsLightSettings extends StatelessWidget {
+  final defaultEffectLight = EffectLight(Effect.Android, 50, 50);
+
   final roundedCardDecoration = BoxDecoration(
       color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(16)));
 
@@ -18,9 +20,12 @@ class EffectsLightSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LightSource>(builder: (builder, lightSource, child) {
       if (lightSource.light is SolidLight) {
-        lightSource.light = EffectLight(Effect.Android, 50, 50);
+        Future.delayed(
+            Duration.zero, () async => lightSource.light = defaultEffectLight);
       }
-      var effectLight = lightSource.light as EffectLight;
+      var effectLight = lightSource is EffectLight
+          ? lightSource.light as EffectLight
+          : defaultEffectLight;
       return Column(children: [
         Row(children: [
           Expanded(
@@ -50,7 +55,7 @@ class EffectsLightSettings extends StatelessWidget {
                         children: [
                           Expanded(
                               child: LMSlider(
-                                  50,
+                                  effectLight.speed,
                                   0,
                                   100,
                                   Icon(
