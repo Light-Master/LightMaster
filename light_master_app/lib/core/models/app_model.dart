@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:tuple/tuple.dart';
+import 'package:light_master_app/widgets/cards.dart';
 
 class AppModel extends ChangeNotifier {
-  final List<Tuple2<LightSource, LightSource>> lightSources = [];
+  final List<Tuple2<LightSource, Cards>> lightSources = [];
 
-  void addLightSource(LightSource lightSource, bool placement) {
-    if (placement && !lightSources.isEmpty && lightSources.last.item1 != null) {
-      lightSources.add(Tuple2(lightSource, null));
-    } else if (!placement &&
-        !lightSources.isEmpty &&
-        lightSources.last.item2 != null) {
-      lightSources.add(Tuple2(null, lightSource));
-    } else {
-      lightSources.add(Tuple2(lightSource, null));
+  void addLightSource(LightSource lightSource, Cards card) {
+    if (lightSource != null) {
+      lightSources.add(Tuple2(lightSource, card));
+      lightSource.addListener(onLightSourceChanged);
+      notifyListeners();
     }
-    lightSource.addListener(onLightSourceChanged);
-    notifyListeners();
   }
 
-  void removeLightSource(LightSource lightSource) {
-    lightSource.removeListener(onLightSourceChanged);
-    lightSources.remove(lightSource);
+  void removeLightSource(Tuple2<LightSource, Cards> item) {
+    item.item1.removeListener(onLightSourceChanged);
+    lightSources.remove(item);
     notifyListeners();
   }
 
