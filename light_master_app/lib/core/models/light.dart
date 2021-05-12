@@ -16,4 +16,25 @@ class EffectLight extends Light {
   EffectLight(this.effect);
 }
 
-enum Effect { Android, Aurora, Blends, Blink, BlinkRainbow, Bpm, Breathe }
+enum Effect {
+  Android,
+  Aurora,
+  Blends,
+  Blink,
+  BlinkRainbow,
+  BouncingBalls,
+  Bpm,
+  Breathe,
+  Candle,
+  CandleMulti,
+  CandyCane,
+  Chase,
+  ChaseFlash,
+  ChaseFlashRnd,
+  ChaseRainbow,
+  Chunchun,
+  Circus,
+  Colorful,
+  Colorloop,
+  Colotwinkles
+}
