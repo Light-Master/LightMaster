@@ -8,9 +8,8 @@ import 'color_picker.dart';
 class MonoLightSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double topMargin = 8;
-    final double sideMargin = 10;
-    final double topPadding = 0;
+    final double verticalMargin = 8;
+    final double horizontalMargin = 10;
 
     var color = Colors.yellow[600];
 
@@ -20,8 +19,10 @@ class MonoLightSettings extends StatelessWidget {
           delegate: SliverChildListDelegate([
             Container(
                 margin: EdgeInsets.only(
-                    top: topMargin, left: sideMargin, right: sideMargin),
-                padding: EdgeInsets.only(top: topPadding),
+                    top: verticalMargin,
+                    bottom: verticalMargin,
+                    left: horizontalMargin,
+                    right: horizontalMargin),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(16))),
