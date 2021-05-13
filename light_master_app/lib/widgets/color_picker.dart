@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 typedef void ColorChangedCallback(Color newColor);
 
@@ -24,14 +24,22 @@ class _LMColorPickerState extends State<LMColorPicker> {
       firstBuild = false;
     }
 
-    return Scaffold(
-        body: Material(
-            child: ColorPicker(
-                pickerColor: selectedColor,
-                onColorChanged: (newColor) {
-                  print("color changed");
-                  setState(() => selectedColor = newColor);
-                  widget.colorChangedCallback(newColor);
-                })));
+    return ColorPicker(
+        pickersEnabled: {
+          ColorPickerType.accent: false,
+          ColorPickerType.both: false,
+          ColorPickerType.bw: false,
+          ColorPickerType.custom: true,
+          ColorPickerType.primary: false,
+          ColorPickerType.wheel: true,
+        },
+        color: selectedColor,
+        wheelDiameter: 275,
+        wheelWidth: 20,
+        wheelHasBorder: false,
+        onColorChanged: (newColor) {
+          selectedColor = newColor;
+          this.widget.colorChangedCallback(newColor);
+        });
   }
 }
