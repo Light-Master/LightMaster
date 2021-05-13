@@ -2,10 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
-class LightSettingsSheetFooter extends StatelessWidget {
+class LightSettingsSheetFooter extends StatefulWidget {
   final VoidCallback cancelCallback;
 
   LightSettingsSheetFooter(this.cancelCallback);
+
+  @override
+  _LightSettingsSheetFooterState createState() =>
+      _LightSettingsSheetFooterState();
+}
+
+class _LightSettingsSheetFooterState extends State<LightSettingsSheetFooter> {
+  bool _hidden = true;
+  double _brightnessValue = 50.0;
+  double _speedValue = 50.0;
+  double _intensityValue = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,7 @@ class LightSettingsSheetFooter extends StatelessWidget {
                     primary: Colors.black, backgroundColor: Colors.grey[300]),
                 onPressed: () {
                   Navigator.pop(context);
-                  this.cancelCallback();
+                  this.widget.cancelCallback();
                 })),
         Container(
             padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
@@ -42,7 +53,7 @@ class LightSettingsSheetFooter extends StatelessWidget {
                 style: TextButton.styleFrom(
                     primary: Colors.white,
                     backgroundColor: Color.fromARGB(255, 116, 128, 255))))
-      ])
+      ]),
       FlutterSlider(
         values: [_brightnessValue],
         max: 255,
