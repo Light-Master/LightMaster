@@ -20,8 +20,9 @@ class LMCard extends StatelessWidget {
               lightSource.isTurnedOn = !lightSource.isTurnedOn;
             },
             onLongPress: () {
-              showCupertinoModalPopup(
+              showModalBottomSheet(
                   context: context,
+                  isScrollControlled: true,
                   builder: (BuildContext bc) {
                     return LightSettingsSheet(lightSource: lightSource);
                   });

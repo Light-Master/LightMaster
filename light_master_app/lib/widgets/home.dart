@@ -4,13 +4,11 @@ import 'package:light_master_app/core/models/app_model.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
-import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:light_master_app/widgets/cards.dart';
+
+import 'card.dart';
 
 class Home extends StatelessWidget {
-  bool mirror = true;
-
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(

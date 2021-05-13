@@ -26,6 +26,7 @@ class EffectsLightSettings extends StatelessWidget {
       var effectLight = lightSource is EffectLight
           ? lightSource.light as EffectLight
           : defaultEffectLight;
+
       return Column(children: [
         Row(children: [
           Expanded(
