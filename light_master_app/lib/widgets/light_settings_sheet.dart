@@ -11,8 +11,12 @@ import 'mono_light_settings.dart';
 
 class LightSettingsSheet extends StatefulWidget {
   final LightSource lightSource;
+  final LightSource lightSourceCopy;
 
-  LightSettingsSheet({Key key, this.lightSource}) : super(key: key);
+  LightSettingsSheet({Key key, this.lightSource})
+      : this.lightSourceCopy = LightSource(lightSource.networkAddress,
+            lightSource.name, lightSource.isTurnedOn, lightSource.light),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => _LightSettingsSheetState();
@@ -47,41 +51,31 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
     }
 
     return ChangeNotifierProvider.value(
-        value: LightSource(this.widget.lightSource.networkAddress,
-            this.widget.lightSource.name, this.widget.lightSource.light),
+        value: this.widget.lightSource,
         child: FractionallySizedBox(
-            alignment: Alignment.bottomCenter,
-            widthFactor: 1,
             heightFactor: 0.875,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(35),
-                        topRight: const Radius.circular(35))),
-                child: new Column(children: [
-                  LightSettingsSheetHeader(),
-                  LightSettingsSheetNavigation(
-                      this.mode,
-                      () => setState(() => mode = LightSourceMode.mono_colour),
-                      () => setState(
-                          () => mode = LightSourceMode.effect_coloring)),
-                  Expanded(
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                        Expanded(
-                            child: Container(
-                                margin: EdgeInsets.only(top: 5),
-                                color: Color.fromARGB(255, 225, 225, 225),
-                                child: settingsWidget))
-                      ])),
-                  Consumer<LightSource>(builder: (context, lightSource, child) {
-                    return LightSettingsSheetFooter(() {
-                      this.widget.lightSource.name = lightSource.name;
-                      this.widget.lightSource.light = lightSource.light;
-                    });
-                  })
-                ]))));
+            alignment: Alignment.bottomCenter,
+            child: SizedBox.expand(
+                child: Container(
+                    child: Column(children: [
+              LightSettingsSheetHeader(),
+              LightSettingsSheetNavigation(
+                  this.mode,
+                  () => setState(() => mode = LightSourceMode.mono_colour),
+                  () => setState(() => mode = LightSourceMode.effect_coloring)),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.only(top: 2, bottom: 2),
+                      color: Color.fromARGB(255, 225, 225, 225),
+                      child: settingsWidget)),
+              Consumer<LightSource>(builder: (context, lightSource, child) {
+                return LightSettingsSheetFooter(() {
+                  lightSource.networkAddress =
+                      this.widget.lightSourceCopy.networkAddress;
+                  lightSource.name = this.widget.lightSourceCopy.name;
+                  lightSource.light = this.widget.lightSourceCopy.light;
+                });
+              })
+            ])))));
   }
 }

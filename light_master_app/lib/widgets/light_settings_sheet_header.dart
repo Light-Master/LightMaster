@@ -23,8 +23,6 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LightSource>(builder: (context, lightSource, child) {
-      print("building header with name ${lightSource.name}");
-
       this.lightSourceNameController.text = lightSource.name;
 
       Color backgroundColor;
@@ -35,7 +33,6 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
         backgroundColor = Colors.grey[300];
       }
 
-      // based on colorpicker logic
       bool darkColor =
           backgroundColor.red + backgroundColor.blue + backgroundColor.green >=
               370;
@@ -65,10 +62,12 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
                           : CupertinoIcons.pencil,
                       color: fontColor),
                   onPressed: () {
-                    setState(() => editing = !editing);
-                    if (!editing) {
+                    if (editing) {
+                      print(
+                          "new lightsource name: ${this.lightSourceNameController.text}");
                       lightSource.name = this.lightSourceNameController.text;
                     }
+                    setState(() => editing = !editing);
                   }),
             ),
             Container(

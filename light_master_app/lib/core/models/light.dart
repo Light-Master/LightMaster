@@ -12,8 +12,31 @@ class SolidLight extends Light {
 
 class EffectLight extends Light {
   final Effect effect;
+  final double brightness;
+  final double speed;
 
-  EffectLight(this.effect);
+  EffectLight(this.effect, this.brightness, this.speed);
 }
 
-enum Effect { Android, Aurora, Blends, Blink, BlinkRainbow, Bpm, Breathe }
+enum Effect {
+  Android,
+  Aurora,
+  Blends,
+  Blink,
+  BlinkRainbow,
+  BouncingBalls,
+  Bpm,
+  Breathe,
+  Candle,
+  CandleMulti,
+  CandyCane,
+  Chase,
+  ChaseFlash,
+  ChaseFlashRnd,
+  ChaseRainbow,
+  Chunchun,
+  Circus,
+  Colorful,
+  Colorloop,
+  Colotwinkles
+}

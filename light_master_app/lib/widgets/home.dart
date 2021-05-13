@@ -6,16 +6,17 @@ import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:light_master_app/widgets/cards.dart';
 
 class Home extends StatelessWidget {
+  bool mirror = true;
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         child: Consumer<AppModel>(builder: (context, model, child) {
-      final lightSources = model.lightSources;
       return CustomScrollView(
-        semanticChildCount: lightSources.length + 2,
-        slivers: [
+        slivers: <Widget>[
           CupertinoSliverNavigationBar(
               largeTitle: Text('Lights'),
               trailing: TextButton(
@@ -23,58 +24,53 @@ class Home extends StatelessWidget {
                 onPressed: () => showCupertinoModalPopup(
                     context: context, builder: (BuildContext bc) => AddLight()),
               )),
-          SliverSafeArea(
-            top: false,
-            minimum: const EdgeInsets.only(top: 8),
-            sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-              if (index < lightSources.length) {
-                // TODO: return fancy light widgets
-                return GestureDetector(
-                    onTap: () {
-                      print(
-                          "switching lights status of light ${model.lightSources[index].name} at $index");
-                    },
-                    onLongPress: () {
-                      print("opening color settings $index");
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext bc) {
-                            return LightSettingsSheet(
-                              lightSource: lightSources[index],
-                            );
-                          });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red[500]),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      width: 150,
-                      child: Text("Light $index"),
-                    ));
-              } else if (index == lightSources.length) {
-                // for testing purposes, rm later
-                return Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text("this is an example with ${model.lightSources.length}.")
-                ]);
-              } else if (index == lightSources.length + 1) {
-                // for testing purposes, rm later
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextButton(
-                        onPressed: () => model.addLightSource(LightSource(
-                            "1.1.1.1",
-                            "Light ${lightSources.length}",
-                            SolidLight(Colors.blue[800]))),
-                        child: Text("click me I dare you"))
-                  ],
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 0.0,
+              crossAxisSpacing: 0.0,
+              childAspectRatio: 2.0,
+              mainAxisExtent: 200.0,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: ChangeNotifierProvider.value(
+                      value: model.lightSources[index], child: LMCard()),
                 );
-              } else {
-                return null;
-              }
-            })),
-          )
+              },
+              childCount: model.lightSources.length,
+            ),
+          ),
+          SliverFixedExtentList(
+            itemExtent: 50.0,
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(color: Colors.blue)))),
+                      onPressed: () => {
+                            model.addLightSource(
+                              LightSource(
+                                  "1.1.1.1",
+                                  "Light ${model.lightSources.length}",
+                                  true,
+                                  SolidLight(Colors.blue[800])),
+                            )
+                          },
+                      child: Text("+")),
+                );
+              },
+              childCount: 1,
+            ),
+          ),
         ],
       );
     }));

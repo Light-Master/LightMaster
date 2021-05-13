@@ -5,9 +5,11 @@ class AppModel extends ChangeNotifier {
   final List<LightSource> lightSources = [];
 
   void addLightSource(LightSource lightSource) {
-    lightSource.addListener(onLightSourceChanged);
-    lightSources.add(lightSource);
-    notifyListeners();
+    if (lightSource != null) {
+      lightSources.add(lightSource);
+      lightSource.addListener(onLightSourceChanged);
+      notifyListeners();
+    }
   }
 
   void removeLightSource(LightSource lightSource) {
