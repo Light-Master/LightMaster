@@ -47,8 +47,11 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
     }
 
     return ChangeNotifierProvider.value(
-        value: LightSource(this.widget.lightSource.networkAddress,
-            this.widget.lightSource.name, this.widget.lightSource.light),
+        value: LightSource(
+            this.widget.lightSource.networkAddress,
+            this.widget.lightSource.name,
+            this.widget.lightSource.isTurnedOn,
+            this.widget.lightSource.light),
         child: FractionallySizedBox(
             alignment: Alignment.bottomCenter,
             widthFactor: 1,

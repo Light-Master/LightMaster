@@ -36,30 +36,8 @@ class Home extends StatelessWidget {
               (BuildContext context, int index) {
                 return Container(
                   alignment: Alignment.center,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (model.lightSources[index].item2.isTurnedOn) {
-                        model.lightSources[index].item2.isTurnedOn = false;
-                        print(
-                            " ${model.lightSources[index].item1.name} with id:$index off");
-                      } else {
-                        model.lightSources[index].item2.isTurnedOn = true;
-                        print(
-                            " ${model.lightSources[index].item1.name} with id:$index on");
-                      }
-                    },
-                    onLongPress: () {
-                      print("opening color settings $index");
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext bc) {
-                            return LightSettingsSheet(
-                              lightSource: model.lightSources[index].item1,
-                            );
-                          });
-                    },
-                    child: Cards(index, Colors.blue, false),
-                  ),
+                  child: ChangeNotifierProvider.value(
+                      value: model.lightSources[index], child: LMCard()),
                 );
               },
               childCount: model.lightSources.length,
@@ -83,8 +61,8 @@ class Home extends StatelessWidget {
                               LightSource(
                                   "1.1.1.1",
                                   "Light ${model.lightSources.length}",
+                                  true,
                                   SolidLight(Colors.blue[800])),
-                              Cards(index, Colors.blue, false),
                             )
                           },
                       child: Text("+")),
