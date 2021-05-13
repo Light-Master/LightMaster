@@ -20,8 +20,13 @@ class LMCard extends StatelessWidget {
               lightSource.isTurnedOn = !lightSource.isTurnedOn;
             },
             onLongPress: () {
-              showCupertinoModalPopup(
+              showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(35),
+                          topRight: const Radius.circular(35))),
                   context: context,
+                  isScrollControlled: true,
                   builder: (BuildContext bc) {
                     return LightSettingsSheet(lightSource: lightSource);
                   });
