@@ -85,24 +85,28 @@ class EffectsLightSettings extends StatelessWidget {
                         var currentEffect = entry.value;
                         var firstEntry = entry.key == 0;
 
-                        var listEntry = ListTile(
-                            title: Text(
-                              currentEffect.toString(),
-                            ),
-                            onTap: () {
-                              var effectLight =
-                                  lightSource.light as EffectLight;
-                              lightSource.light = EffectLight(currentEffect,
-                                  effectLight.brightness, effectLight.speed);
-                            },
-                            trailing: lightSource.light is EffectLight &&
-                                    (lightSource.light as EffectLight).effect ==
-                                        currentEffect
-                                ? Icon(
-                                    CupertinoIcons.checkmark_alt,
-                                    color: Colors.blue,
-                                  )
-                                : null);
+                        var listEntry = Material(
+                            child: ListTile(
+                                title: Text(
+                                  currentEffect.toString(),
+                                ),
+                                onTap: () {
+                                  var effectLight =
+                                      lightSource.light as EffectLight;
+                                  lightSource.light = EffectLight(
+                                      currentEffect,
+                                      effectLight.brightness,
+                                      effectLight.speed);
+                                },
+                                trailing: lightSource.light is EffectLight &&
+                                        (lightSource.light as EffectLight)
+                                                .effect ==
+                                            currentEffect
+                                    ? Icon(
+                                        CupertinoIcons.checkmark_alt,
+                                        color: Colors.blue,
+                                      )
+                                    : null));
 
                         if (firstEntry) {
                           return [listEntry];
