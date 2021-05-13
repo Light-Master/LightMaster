@@ -21,6 +21,10 @@ class LMCard extends StatelessWidget {
             },
             onLongPress: () {
               showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(35),
+                          topRight: const Radius.circular(35))),
                   context: context,
                   isScrollControlled: true,
                   builder: (BuildContext bc) {
