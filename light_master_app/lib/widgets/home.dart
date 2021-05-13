@@ -6,8 +6,7 @@ import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:light_master_app/widgets/light_settings_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_custom_cards/flutter_custom_cards.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:light_master_app/widgets/cards.dart';
 
 class Home extends StatelessWidget {
   bool mirror = true;
@@ -16,11 +15,8 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         child: Consumer<AppModel>(builder: (context, model, child) {
-      final lightSources = model.lightSources;
       return CustomScrollView(
-        // TODO: remove +2
-        semanticChildCount: lightSources.length + 2,
-        slivers: [
+        slivers: <Widget>[
           CupertinoSliverNavigationBar(
               largeTitle: Text('Lights'),
               trailing: TextButton(
@@ -28,85 +24,53 @@ class Home extends StatelessWidget {
                 onPressed: () => showCupertinoModalPopup(
                     context: context, builder: (BuildContext bc) => AddLight()),
               )),
-          SliverSafeArea(
-            top: false,
-            minimum: const EdgeInsets.only(top: 8),
-            sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-              if (index < lightSources.length) {
-                // TODO: return fancy light widgets
-                return GestureDetector(
-                    onTap: () {
-                      print(
-                          " ${model.lightSources[index].item1.name} at $index");
-                    },
-                    onLongPress: () {
-                      print("opening color settings $index");
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext bc) {
-                            return LightSettingsSheet(
-                              lightSource: lightSources[index].item1,
-                            );
-                          });
-                    },
-                    child: Stack(children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: Row(
-                          children: [
-                            //ImageCard Example
-                            ImageCard(
-                              elevation: 12,
-                              childPadding: 40,
-                              shadowColor: Colors.green,
-                              image: Image.network(
-                                'https://miro.medium.com/max/85/1*ilC2Aqp5sZd1wi0CopD1Hw.png',
-                              ),
-                            ),
-                            ImageCard(
-                              elevation: 8,
-                              shadowColor: Colors.red,
-                              childPadding: 40,
-                              color: Colors.yellow,
-                              image: Image.network(
-                                'https://miro.medium.com/max/85/1*ilC2Aqp5sZd1wi0CopD1Hw.png',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ]));
-              } else if (index == lightSources.length) {
-                // TODO: for testing purposes, rm later
-                return Align(
-                    child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(color: Colors.blue)))),
-                        onPressed: () => {
-                              model.addLightSource(
-                                  LightSource(
-                                      "1.1.1.1",
-                                      "Light ${lightSources.length}",
-                                      SolidLight(Colors.blue[800])),
-                                  mirror)
-                            },
-                        child: Text("+"))
-                  ],
-                ));
-              } else {
-                return null;
-              }
-            })),
-          )
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 0.0,
+              crossAxisSpacing: 0.0,
+              childAspectRatio: 2.0,
+              mainAxisExtent: 200.0,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: ChangeNotifierProvider.value(
+                      value: model.lightSources[index], child: LMCard()),
+                );
+              },
+              childCount: model.lightSources.length,
+            ),
+          ),
+          SliverFixedExtentList(
+            itemExtent: 50.0,
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(color: Colors.blue)))),
+                      onPressed: () => {
+                            model.addLightSource(
+                              LightSource(
+                                  "1.1.1.1",
+                                  "Light ${model.lightSources.length}",
+                                  true,
+                                  SolidLight(Colors.blue[800])),
+                            )
+                          },
+                      child: Text("+")),
+                );
+              },
+              childCount: 1,
+            ),
+          ),
         ],
       );
     }));
