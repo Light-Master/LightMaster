@@ -11,7 +11,6 @@ class LMCard extends StatelessWidget {
   final double turnedOffElevation = 0;
   final double childPadding = 45;
   final Color shadowColor = Colors.blue;
-  double elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class LMCard extends StatelessWidget {
                       lightSource.isTurnedOn ? Colors.transparent : shadowColor,
                 ),
                 child: ImageCard(
-                  elevation: elevation = lightSource.isTurnedOn
+                  elevation: lightSource.isTurnedOn
                       ? turnedOffElevation
                       : turnedOnElevation,
                   childPadding: childPadding,
