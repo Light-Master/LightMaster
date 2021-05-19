@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
 
 class LightSettingsSheetFooter extends StatelessWidget {
   final VoidCallback cancelCallback;
