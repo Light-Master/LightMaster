@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
 import 'package:light_master_app/widgets/light_settings_sheet_navigation.dart';
@@ -8,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'effects_light_settings.dart';
 import 'light_settings_sheet_header.dart';
 import 'mono_light_settings.dart';
+
+enum LightSourceMode { mono_colour, effect_coloring }
 
 class LightSettingsSheet extends StatefulWidget {
   final LightSource lightSource;
@@ -22,24 +23,12 @@ class LightSettingsSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _LightSettingsSheetState();
 }
 
-enum LightSourceMode { mono_colour, effect_coloring }
-
 class _LightSettingsSheetState extends State<LightSettingsSheet> {
   bool initialBuild = true;
-  LightSourceMode mode;
+  var mode = LightSourceMode.mono_colour;
 
   @override
   Widget build(BuildContext context) {
-    if (initialBuild) {
-      if (this.widget.lightSource.light == null ||
-          this.widget.lightSource.light is SolidLight) {
-        mode = LightSourceMode.mono_colour;
-      } else {
-        mode = LightSourceMode.effect_coloring;
-      }
-      initialBuild = false;
-    }
-
     Widget settingsWidget;
     switch (mode) {
       case LightSourceMode.mono_colour:
@@ -68,13 +57,15 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
                       padding: EdgeInsets.only(top: 2, bottom: 2),
                       color: Color.fromARGB(255, 225, 225, 225),
                       child: settingsWidget)),
-              Consumer<LightSource>(builder: (context, lightSource, child) {
-                return LightSettingsSheetFooter(() {
-                  lightSource.networkAddress =
-                      this.widget.lightSourceCopy.networkAddress;
-                  lightSource.name = this.widget.lightSourceCopy.name;
-                  lightSource.light = this.widget.lightSourceCopy.light;
-                });
+              LightSettingsSheetFooter(() {
+                // this is called when the cancel button is pressed
+                // there exists no call back since we apply all changes to the original instance
+
+                // previous code:
+                // lightSource.networkAddress =
+                //     this.widget.lightSourceCopy.networkAddress;
+                // lightSource.name = this.widget.lightSourceCopy.name;
+                // lightSource.light = this.widget.lightSourceCopy.light;
               })
             ])))));
   }

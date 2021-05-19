@@ -44,7 +44,7 @@ class _LMSliderState extends State<LMSlider> {
           max: this.widget.maxValue,
           onDragging: (handlerIndex, lowerValue, upperValue) {
             setState(() => sliderValue = lowerValue);
-            this.widget.onSliderValueChanged(sliderValue);
+            this.widget.onSliderValueChanged(lowerValue);
           },
           trackBar: sliderTrackBar,
           handler: FlutterSliderHandler(
