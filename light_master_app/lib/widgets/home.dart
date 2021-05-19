@@ -12,6 +12,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+        // consumes model from app_model.dart
         child: Consumer<AppModel>(builder: (context, model, child) {
       return CustomScrollView(
         slivers: <Widget>[

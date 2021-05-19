@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'widgets/app.dart';
 
 void main() {
+  // MARK:- model is created from app_model.dart with child from app.dart
   runApp(ChangeNotifierProvider(
     create: (context) => AppModel(),
     child: App(),
