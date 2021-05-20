@@ -44,7 +44,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
 
       return Container(
           height: 65,
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(bottom: 30),
           child: Stack(children: [
             Container(
               decoration: BoxDecoration(
@@ -73,7 +73,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
             Container(
                 alignment: AlignmentDirectional.center,
                 child: Container(
-                    width: 250,
+                    width: 150,
                     child: editing
                         ? CupertinoTextField(
                             controller: lightSourceNameController,
