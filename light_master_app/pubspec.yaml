@@ -33,6 +33,9 @@ dependencies:
   tuple: ^2.0.0
   scroll_to_index: ^1.0.6
   flex_color_picker: ^2.0.1
+  http: ^0.12.0
+  async: ^2.5.0
+  web_socket_channel: ^2.1.0
 
 dev_dependencies:
   flutter_test:
