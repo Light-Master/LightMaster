@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'color_picker.dart';
+import '../../../widgets/color_picker.dart';
 
 class MonoLightSettings extends StatelessWidget {
   final double verticalMargin = 8;

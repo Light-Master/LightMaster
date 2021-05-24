@@ -4,9 +4,9 @@ import 'package:light_master_app/widgets/light_settings_sheet_footer.dart';
 import 'package:light_master_app/widgets/light_settings_sheet_navigation.dart';
 import 'package:provider/provider.dart';
 
-import 'effects_light_settings.dart';
+import '../modules/dashboard/screens/effects_light_settings.dart';
 import 'light_settings_sheet_header.dart';
-import 'mono_light_settings.dart';
+import '../modules/dashboard/screens/mono_light_settings.dart';
 
 enum LightSourceMode { mono_colour, effect_coloring }
 

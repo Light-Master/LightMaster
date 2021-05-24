@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/utils/helpers/color_resolver.dart';
-import 'package:light_master_app/widgets/mono_light_settings.dart';
+import 'package:light_master_app/modules/dashboard/screens/mono_light_settings.dart';
 import 'package:provider/provider.dart';
 
 class LightSettingsSheetHeader extends StatefulWidget {
