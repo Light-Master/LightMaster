@@ -26,6 +26,7 @@ class LightSource extends ChangeNotifier {
   Light get light => _light;
   set light(Light newLight) {
     this._light = newLight;
+    print("Light source has changed color ${_light.toString()}");
     notifyListeners();
   }
 }
