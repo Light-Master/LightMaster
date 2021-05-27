@@ -19,8 +19,14 @@ class Home extends StatelessWidget {
               largeTitle: Text('Lights'),
               trailing: TextButton(
                 child: Text("Add"),
-                onPressed: () => showCupertinoModalPopup(
-                    context: context, builder: (BuildContext bc) => AddLight()),
+                onPressed: () => showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(35),
+                          topRight: const Radius.circular(35))),
+                  isScrollControlled: true,
+                  context: context, builder: (BuildContext bc) => AddLight()
+                  )
               )),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -39,34 +45,6 @@ class Home extends StatelessWidget {
                 );
               },
               childCount: model.lightSources.length,
-            ),
-          ),
-          SliverFixedExtentList(
-            itemExtent: 50.0,
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      side: BorderSide(color: Colors.blue)))),
-                      onPressed: () => {
-                            model.addLightSource(
-                              LightSource(
-                                  "1.1.1.1",
-                                  "Light ${model.lightSources.length}",
-                                  true,
-                                  SolidLight(Colors.blue[800])),
-                            )
-                          },
-                      child: Text("+")),
-                );
-              },
-              childCount: 1,
             ),
           ),
         ],
