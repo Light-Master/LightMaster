@@ -41,46 +41,6 @@ class _CounterState extends State<AddLight> {
     });
   }
 
-  void _autoDetect() {
-    CircularProgressIndicator();
-    Timer(Duration(seconds: 3), () {
-      setState(() {
-        _container = Container(
-            child: Expanded(
-                flex: 10,
-                child: SingleChildScrollView(
-                    child: FlutterRadioButtonGroup(
-                        items: [
-                      /*put your items here*/
-                      "192.168.1.10",
-                      "192.168.1.11",
-                      "192.168.1.12",
-                      "192.168.1.13",
-                      "192.168.1.14",
-                      "192.168.1.15",
-                      "192.168.1.16",
-                      "192.168.1.17",
-                      "192.168.1.18",
-                      "192.168.1.19",
-                      "192.168.1.20",
-                      "192.168.1.21",
-                      "192.168.1.22",
-                      "192.168.1.23",
-                      "192.168.1.24",
-                      "192.168.1.25",
-                      "192.168.1.26",
-                      "192.168.1.27",
-                      "192.168.1.28",
-                      "192.168.1.29",
-                      "192.168.1.30",
-                    ],
-                        onSelected: (String selected) {
-                          this.selected = selected;
-                        }))));
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called,
@@ -104,7 +64,7 @@ class _CounterState extends State<AddLight> {
               top: 60,
               child: Container(
           padding: EdgeInsets.only(top:20, bottom: 20),
-          child: Text('Add new light source',
+          child: Text('Add new light',
                        style: new TextStyle(color: Colors.white, fontSize: 25.0)))),
             Expanded(
             child: SingleChildScrollView(
@@ -146,20 +106,20 @@ class _CounterState extends State<AddLight> {
                       "192.168.1.14",
                       "192.168.1.15",
                       "192.168.1.16",
-                      "192.168.1.17",
-                      "192.168.1.18",
-                      "192.168.1.19",
-                      "192.168.1.20",
-                      "192.168.1.21",
-                      "192.168.1.22",
-                      "192.168.1.23",
-                      "192.168.1.24",
-                      "192.168.1.25",
-                      "192.168.1.26",
-                      "192.168.1.27",
-                      "192.168.1.28",
-                      "192.168.1.29",
-                      "192.168.1.30",
+                      //"192.168.1.17",
+                      //"192.168.1.18",
+                      //"192.168.1.19",
+                      //"192.168.1.20",
+                      //"192.168.1.21",
+                      //"192.168.1.22",
+                      //"192.168.1.23",
+                      //"192.168.1.24",
+                      //"192.168.1.25",
+                      //"192.168.1.26",
+                      //"192.168.1.27",
+                      //"192.168.1.28",
+                      //"192.168.1.29",
+                      //"192.168.1.30",
                     ],
                         onSelected: (String selected) {
                           this.selected = selected;

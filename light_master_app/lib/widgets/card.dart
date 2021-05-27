@@ -9,8 +9,8 @@ import 'light_settings_sheet.dart';
 class LMCard extends StatelessWidget {
   final double turnedOnElevation = 12;
   final double turnedOffElevation = 0;
-  final double childPadding = 45;
-  final Color shadowColor = Colors.blue;
+  final double childPadding = 35;
+  final Color shadowColor = Colors.yellow;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,8 @@ class LMCard extends StatelessWidget {
                     return LightSettingsSheet(lightSource: lightSource);
                   });
             },
-            child: Container(
+            child: Stack(children: [
+              Container(
                 decoration: BoxDecoration(
                   color:
                       lightSource.isTurnedOn ? Colors.transparent : shadowColor,
@@ -42,9 +43,15 @@ class LMCard extends StatelessWidget {
                       : turnedOnElevation,
                   childPadding: childPadding,
                   shadowColor: shadowColor,
-                  image: Image.network(
-                    'https://miro.medium.com/max/85/1*ilC2Aqp5sZd1wi0CopD1Hw.png',
-                  ),
-                ))));
+                  image: lightSource.isTurnedOn ? Image.asset('assets/images/off.png') : Image.asset('assets/images/on.png'),
+                )),
+                Positioned(
+                  left: 20,
+                  bottom: 15,
+                  right: 20,
+                  child: Text("Light", textAlign: TextAlign.center)
+                )
+            ]),)
+                );
   }
 }

@@ -34,12 +34,13 @@ class Home extends StatelessWidget {
               mainAxisSpacing: 0.0,
               crossAxisSpacing: 0.0,
               childAspectRatio: 2.0,
-              mainAxisExtent: 200.0,
+              mainAxisExtent: 185.0,
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
                   alignment: Alignment.center,
+                  padding: EdgeInsets.only(top:20),
                   child: ChangeNotifierProvider.value(
                       value: model.lightSources[index], child: LMCard()),
                 );
