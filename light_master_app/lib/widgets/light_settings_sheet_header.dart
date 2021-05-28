@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/utils/helpers/color_resolver.dart';
-import 'package:light_master_app/modules/dashboard/screens/mono_light_settings.dart';
-import 'package:provider/provider.dart';
 
 class LightSettingsSheetHeader extends StatefulWidget {
   @override
@@ -25,8 +23,8 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
   @override
   Widget build(BuildContext context) {
     // start debug code
-    var lightSource = LightSource(
-        "1.1.1.1", "Fleshlightlight", true, SolidLight(Colors.yellow));
+    var lightSource =
+        LightSource("1.1.1.1", "Light", true, SolidLight(Colors.yellow));
     // end debug code
 
     this.lightSourceNameController.text = lightSource.name;
@@ -47,7 +45,6 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
 
     return Container(
         height: 65,
-        padding: EdgeInsets.only(bottom: 5),
         child: Stack(children: [
           Container(
             decoration: BoxDecoration(
@@ -76,7 +73,7 @@ class _LightSettingsSheetHeaderState extends State<LightSettingsSheetHeader> {
           Container(
               alignment: AlignmentDirectional.center,
               child: Container(
-                  width: 250,
+                  width: 150,
                   child: editing
                       ? CupertinoTextField(
                           controller: lightSourceNameController,

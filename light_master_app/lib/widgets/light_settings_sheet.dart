@@ -42,7 +42,7 @@ class _LightSettingsSheetState extends State<LightSettingsSheet> {
     return ChangeNotifierProvider.value(
         value: this.widget.lightSource,
         child: FractionallySizedBox(
-            heightFactor: 0.875,
+            heightFactor: 0.9,
             alignment: Alignment.bottomCenter,
             child: SizedBox.expand(
                 child: Container(

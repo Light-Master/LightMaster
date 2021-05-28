@@ -12,7 +12,7 @@ class LightSettingsSheetFooter extends StatelessWidget {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
         Container(
-            padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
+            padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
             width: buttonWidth,
             child: TextButton(
                 child: Text("Cancel"),
@@ -23,7 +23,7 @@ class LightSettingsSheetFooter extends StatelessWidget {
                   this.cancelCallback();
                 })),
         Container(
-            padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
+            padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
             width: buttonWidth,
             child: TextButton(
                 child: Text("Close"),
