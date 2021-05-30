@@ -15,10 +15,11 @@ class ManagedLightSourceBloc
     if (event is ManagedLightSourceClearEvent)
       _lightSources.clear();
     else if (event is ManagedLightSourceAddEvent) {
-      print("Test");
+      print("add event");
       _lightSources.add(event.lightSource);
     } else if (event is ManagedLightSourceChangeEvent) {
       int index = 0;
+      print("change event");
       for (index; index < _lightSources.length; index++) {
         if (_lightSources[index].id == event.lightSource.id) {
           _lightSources[index] = event.lightSource;
@@ -26,9 +27,10 @@ class ManagedLightSourceBloc
         }
       }
     } else if (event is ManagedLightSourceRemoveEvent) {
+      print("remove event");
       _lightSources.remove(event.lightSource);
     }
 
-    yield _lightSources;
+    yield [..._lightSources];
   }
 }

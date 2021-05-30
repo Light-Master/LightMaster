@@ -12,9 +12,9 @@ class LMCard extends StatelessWidget {
   final double turnedOffElevation = 0;
   final double childPadding = 35;
   final Color shadowColor = Colors.yellow;
+  LightSource lightSource;
 
-  LightSource lightSource =
-      LightSource("1.1.1.1", "Light 1", false, SolidLight(Colors.blue[800]));
+  LMCard(this.lightSource);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class LMCard extends StatelessWidget {
                     left: 20,
                     bottom: 20,
                     right: 20,
-                    child: Text("Light______aaaaaaaaa aaaaaaaaa aaaaaaa aaaaaa",
+                    child: Text(lightSource.name,
                         textAlign: TextAlign.center))
               ]),
               shape: ContinuousRectangleBorder(
