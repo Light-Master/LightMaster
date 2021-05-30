@@ -19,8 +19,8 @@ class Home extends StatelessWidget {
       // consumes model from app_model.dart
       child: CustomScrollView(slivers: <Widget>[
         CupertinoSliverNavigationBar(
-            largeTitle: Text('Lights'),
-            trailing: TextButton(
+          largeTitle: Text('Lights'),
+          trailing: TextButton(
               child: Text("Add"),
               onPressed: () => showModalBottomSheet(
                   shape: RoundedRectangleBorder(
@@ -29,21 +29,12 @@ class Home extends StatelessWidget {
                           topRight: const Radius.circular(35))),
                   isScrollControlled: true,
                   context: context,
-                  builder: (BuildContext bc) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (BuildContext context) => AddLightBloc()
-                      ),
-                      BlocProvider(
-                          create: (BuildContext context) => _managedLightSourceBloc
-                      ),
-                        ],
-                        child: AddLight(),
-                      ))),
-            ),
+                  builder: (BuildContext bc) => BlocProvider.value(
+                      value: AddLightBloc(), child: AddLight()))),
+        ),
         BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
             builder: (BuildContext context, List<LightSource> state) {
-              print("build");
+          print("building with ${state.length} elements");
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200.0,

@@ -26,7 +26,9 @@ class AddLight extends StatelessWidget {
     // having to individually changes instances of widgets.
 
     final _addLightBloc = BlocProvider.of<AddLightBloc>(context);
-    final _managedLightSourceBloc = BlocProvider.of<ManagedLightSourceBloc>(context);
+    final _managedLightSourceBloc =
+        BlocProvider.of<ManagedLightSourceBloc>(context);
+
     TextEditingController _name = TextEditingController(text: 'Name');
     TextEditingController _ip = TextEditingController(text: 'IP');
     FlutterRadioButtonGroup _detected = FlutterRadioButtonGroup(
@@ -78,11 +80,11 @@ class AddLight extends StatelessWidget {
                   color: Color.fromARGB(255, 225, 225, 225),
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Column(children: <Widget>[
-                  CupertinoTextField(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-              textAlign: TextAlign.center,
-                    controller: _name,
-            ),
+                    CupertinoTextField(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      textAlign: TextAlign.center,
+                      controller: _name,
+                    ),
                     Divider(
                       color: Color.fromARGB(255, 225, 225, 225),
                       height: 10,
@@ -105,8 +107,7 @@ class AddLight extends StatelessWidget {
                   color: Colors.white70,
                   padding: EdgeInsets.only(top: 20.0, left: 20.0, bottom: 10.0),
                   // TODO: add auto search function to locate nearby lights on the network
-                  child: _detected
-              )
+                  child: _detected)
             ]),
           )),
           Container(
@@ -115,20 +116,15 @@ class AddLight extends StatelessWidget {
                   style: _buttonStyle,
                   onPressed: () {
                     String ip;
-                    if(_ip.text == "IP")
+                    if (_ip.text == "IP")
                       ip = _selected;
                     else
                       ip = _ip.toString();
 
-                    _managedLightSourceBloc.add(
-                        ManagedLightSourceAddEvent(
-                          LightSource(
-                              "${ip}",
-                              "${_name.text}",
-                              true,
-                              SolidLight(Colors.blue[800])
-                          ),
-                        ));
+                    _managedLightSourceBloc.add(ManagedLightSourceAddEvent(
+                      LightSource("${ip}", "${_name.text}", true,
+                          SolidLight(Colors.blue[800])),
+                    ));
                     /*
                       model.addLightSource(
                         LightSource(
