@@ -52,7 +52,7 @@ class Home extends StatelessWidget {
                   child: LMCard(),
                 );
               },
-              childCount: 1 /*state.length*/,
+              childCount: 4 /*state.length*/,
             ),
           );
         }),

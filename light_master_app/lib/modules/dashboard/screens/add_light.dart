@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class AddLight extends StatelessWidget {
   ButtonStyle _buttonStyle = ButtonStyle(
       minimumSize: MaterialStateProperty.all(Size.fromHeight(50)),
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.white));
+      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue));
   String selected = "";
 
   @override
@@ -28,7 +28,7 @@ class AddLight extends StatelessWidget {
     //_autoDetect();
     return Container(
         decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Color.fromARGB(255, 225, 225, 225),
             borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(35),
                 topRight: const Radius.circular(35))),
@@ -36,14 +36,14 @@ class AddLight extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 20),
         child: Column(children: <Widget>[
           Container(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 20, bottom: 10),
               child: Text('Add new light',
-                  style: new TextStyle(color: Colors.white, fontSize: 25.0))),
+                  style: new TextStyle(color: Colors.black, fontSize: 25.0))),
           Expanded(
               child: SingleChildScrollView(
             child: Column(children: <Widget>[
               Container(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 225, 225, 225),
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Column(children: <Widget>[
                     CupertinoTextField(
@@ -52,8 +52,8 @@ class AddLight extends StatelessWidget {
                       placeholder: 'Name',
                     ),
                     Divider(
-                      color: Colors.grey,
-                      height: 5,
+                      color: Color.fromARGB(255, 225, 225, 225),
+                      height: 10,
                       thickness: 1,
                       indent: 0,
                     ),
@@ -63,7 +63,7 @@ class AddLight extends StatelessWidget {
                       placeholder: 'IP-Address',
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: Color.fromARGB(255, 225, 225, 225),
                       height: 10,
                       thickness: 1,
                       indent: 0,
@@ -83,20 +83,20 @@ class AddLight extends StatelessWidget {
                         "192.168.1.14",
                         "192.168.1.15",
                         "192.168.1.16",
-                        //"192.168.1.17",
-                        //"192.168.1.18",
-                        //"192.168.1.19",
-                        //"192.168.1.20",
-                        //"192.168.1.21",
-                        //"192.168.1.22",
-                        //"192.168.1.23",
-                        //"192.168.1.24",
-                        //"192.168.1.25",
-                        //"192.168.1.26",
-                        //"192.168.1.27",
-                        //"192.168.1.28",
-                        //"192.168.1.29",
-                        //"192.168.1.30",
+                        "192.168.1.17",
+                        "192.168.1.18",
+                        "192.168.1.19",
+                        "192.168.1.20",
+                        "192.168.1.21",
+                        "192.168.1.22",
+                        "192.168.1.23",
+                        "192.168.1.24",
+                        "192.168.1.25",
+                        "192.168.1.26",
+                        "192.168.1.27",
+                        "192.168.1.28",
+                        "192.168.1.29",
+                        "192.168.1.30",
                       ],
                       onSelected: (String selected) {
                         this.selected = selected;
@@ -104,7 +104,7 @@ class AddLight extends StatelessWidget {
             ]),
           )),
           Container(
-              padding: EdgeInsets.only(bottom: 0, left: 20, right: 20),
+              padding: EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
               child: ElevatedButton(
                   style: _buttonStyle,
                   onPressed: () {
@@ -120,7 +120,8 @@ class AddLight extends StatelessWidget {
                   },
                   child: Text('Save',
                       style: new TextStyle(
-                          color: Colors.blueAccent, fontSize: 15.0))))
+                          color: Color.fromARGB(255, 225, 225, 225),
+                          fontSize: 15.0))))
         ]));
   }
 }

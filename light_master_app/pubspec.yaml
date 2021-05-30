@@ -63,8 +63,7 @@ flutter:
     # - assets/html/license_agreement.html
 
     # images 
-    - assets/images/off.png
-    - assets/images/on.png
+    - assets/images/card.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -38,24 +38,27 @@ class LMCard extends StatelessWidget {
       },
       child: Stack(children: [
         Container(
-            decoration: BoxDecoration(
-              color: lightSource.isTurnedOn ? Colors.transparent : shadowColor,
-            ),
-            child: ImageCard(
-              elevation: lightSource.isTurnedOn
-                  ? turnedOffElevation
-                  : turnedOnElevation,
-              childPadding: childPadding,
-              shadowColor: shadowColor,
-              image: lightSource.isTurnedOn
-                  ? Image.asset('assets/images/off.png')
-                  : Image.asset('assets/images/on.png'),
+            width: 160,
+            height: 160,
+            child: Card(
+              color: lightSource.isTurnedOn ? Colors.grey : shadowColor,
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Stack(children: [
+                Positioned(
+                    left: 20,
+                    bottom: 20,
+                    right: 20,
+                    child: Text("Light______aaaaaaaaa aaaaaaaaa aaaaaaa aaaaaa",
+                        textAlign: TextAlign.center))
+              ]),
+              shape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                Radius.circular(35.0),
+              )),
+              elevation: lightSource.isTurnedOn ? 0 : 12,
+              margin: EdgeInsets.all(10),
             )),
-        Positioned(
-            left: 20,
-            bottom: 15,
-            right: 20,
-            child: Text("Light", textAlign: TextAlign.center))
       ]),
     );
   }
