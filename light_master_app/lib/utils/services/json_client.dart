@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-class JsonApiClient {
+class JsonClient {
   final _baseUrl;
   final http.Client _httpClient;
 
-  JsonApiClient({
+  JsonClient({
     @required String baseUrl,
     @required http.Client httpClient,
   })  : _baseUrl = baseUrl,
@@ -36,5 +36,14 @@ class JsonApiClient {
 
     final json = jsonDecode(response.body);
     return json;
+  }
+
+  void setName(String value) async {
+    final url = '$_baseUrl/settings/ui?DS=$value';
+    final response = await this._httpClient.post(url);
+
+    if (response.statusCode != 200) {
+      throw new Exception('could not reach instance');
+    }
   }
 }

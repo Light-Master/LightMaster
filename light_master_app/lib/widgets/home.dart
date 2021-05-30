@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:light_master_app/core/models/app_model.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
-import 'package:light_master_app/utils/services/http_rest.dart';
+import 'package:light_master_app/utils/services/json_client.dart';
 import 'package:light_master_app/utils/services/websocket_client.dart';
 import 'package:light_master_app/widgets/add_light.dart';
 import 'package:provider/provider.dart';
@@ -15,16 +15,16 @@ import 'card.dart';
 
 class Home extends StatelessWidget {
   final httpClient = http.Client();
-  JsonApiClient apiClient;
+  JsonClient apiClient;
 
   @override
   Widget build(BuildContext context) {
     apiClient =
-        JsonApiClient(baseUrl: "http://192.168.0.71", httpClient: httpClient);
+        JsonClient(baseUrl: "http://192.168.0.71", httpClient: httpClient);
     // apiClient.fetchEffects().then((value) => print(value));
     // apiClient.fetchPaletts().then((value) => print(value));
 
-    var websocketClient = WebsocketApiClient(baseUrl: "http://192.168.0.71");
+    var websocketClient = WebsocketClient(baseUrl: "http://192.168.0.71");
     websocketClient.stateStream.listen((event) {
       print(event.toString());
     });
