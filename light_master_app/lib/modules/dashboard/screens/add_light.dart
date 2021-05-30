@@ -8,7 +8,6 @@ import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
-import 'package:provider/provider.dart';
 
 class AddLight extends StatelessWidget {
   ButtonStyle _buttonStyle = ButtonStyle(
@@ -26,8 +25,6 @@ class AddLight extends StatelessWidget {
     // having to individually changes instances of widgets.
 
     final _addLightBloc = BlocProvider.of<AddLightBloc>(context);
-    final _managedLightSourceBloc =
-        BlocProvider.of<ManagedLightSourceBloc>(context);
 
     TextEditingController _name = TextEditingController(text: 'Name');
     TextEditingController _ip = TextEditingController(text: 'IP');
@@ -120,6 +117,9 @@ class AddLight extends StatelessWidget {
                       ip = _selected;
                     else
                       ip = _ip.toString();
+
+                    final _managedLightSourceBloc =
+                        BlocProvider.of<ManagedLightSourceBloc>(context);
 
                     _managedLightSourceBloc.add(ManagedLightSourceAddEvent(
                       LightSource("${ip}", "${_name.text}", true,
