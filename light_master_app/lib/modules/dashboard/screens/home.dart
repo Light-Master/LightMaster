@@ -19,22 +19,25 @@ class Home extends StatelessWidget {
       // consumes model from app_model.dart
       child: CustomScrollView(slivers: <Widget>[
         CupertinoSliverNavigationBar(
-          largeTitle: Text('Lights'),
-          trailing: TextButton(
-              child: Text("Add"),
-              onPressed: () => showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(35),
-                          topRight: const Radius.circular(35))),
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (BuildContext bc) => BlocProvider.value(
-                      value: AddLightBloc(), child: AddLight()))),
-        ),
+            largeTitle: Text('Lights'),
+            trailing: TextButton(
+                child: Text("Add"),
+                onPressed: () => showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: const Radius.circular(35),
+                              topRight: const Radius.circular(35))),
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (BuildContext bc) =>
+                          MultiBlocProvider(providers: [
+                        BlocProvider.value(value: AddLightBloc()),
+                        BlocProvider.value(value: _managedLightSourceBloc)
+                      ], child: AddLight()),
+                    ))),
         BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
             builder: (BuildContext context, List<LightSource> state) {
-          print("building with ${state.length} elements");
+          print("building with ${state.length + 1} elements");
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200.0,
