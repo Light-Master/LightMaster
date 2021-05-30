@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
                     ))),
         BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
             builder: (BuildContext context, List<LightSource> state) {
-          print("building with ${state.length + 1} elements");
+          print("building with ${state.length} elements");
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200.0,
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(top: 20),
-                  child: LMCard(),
+                  child: LMCard(state[index]),
                 );
               },
               childCount: state.length,
