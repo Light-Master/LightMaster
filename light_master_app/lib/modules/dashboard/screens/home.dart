@@ -29,13 +29,21 @@ class Home extends StatelessWidget {
                           topRight: const Radius.circular(35))),
                   isScrollControlled: true,
                   context: context,
-                  builder: (BuildContext bc) => BlocProvider(
-                        create: (BuildContext context) => AddLightBloc(),
+                  builder: (BuildContext bc) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (BuildContext context) => AddLightBloc()
+                      ),
+                      BlocProvider(
+                          create: (BuildContext context) => _managedLightSourceBloc
+                      ),
+                        ],
                         child: AddLight(),
-                      )),
-            )),
+                      ))),
+            ),
         BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
             builder: (BuildContext context, List<LightSource> state) {
+              print("build");
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200.0,
@@ -52,7 +60,7 @@ class Home extends StatelessWidget {
                   child: LMCard(),
                 );
               },
-              childCount: 4 /*state.length*/,
+              childCount: state.length,
             ),
           );
         }),

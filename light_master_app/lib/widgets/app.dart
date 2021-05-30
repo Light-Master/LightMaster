@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:light_master_app/modules/dashboard/bloc/add_light_bloc.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 
 import '../modules/dashboard/screens/home.dart';
@@ -17,8 +18,15 @@ class App extends StatelessWidget {
         theme: const CupertinoThemeData(
           brightness: Brightness.light,
         ),
-        home: BlocProvider(
-          create: (BuildContext context) => ManagedLightSourceBloc(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (BuildContext context) => ManagedLightSourceBloc(),
+            ),
+            BlocProvider(
+                create: (BuildContext context) => AddLightBloc()
+            ),
+          ],
           child: Home(),
         ),
         localizationsDelegates: [

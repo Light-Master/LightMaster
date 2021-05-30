@@ -12,8 +12,10 @@ class ManagedLightSourceBloc extends Bloc<ManagedLightSourceEvent, List<LightSou
   Stream<List<LightSource>> mapEventToState(ManagedLightSourceEvent event) async* {
     if(event is ManagedLightSourceClearEvent)
       _lightSources.clear();
-    if(event is ManagedLightSourceAddEvent)
+    if(event is ManagedLightSourceAddEvent) {
+      print("Test");
       _lightSources.add(event.lightSource);
+    }
     if(event is ManagedLightSourceChangeEvent) {
       int index = 0;
       for(index; index < _lightSources.length; index++){
