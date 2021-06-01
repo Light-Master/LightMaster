@@ -46,10 +46,15 @@ class LightSettingsSheet extends StatelessWidget {
             child: SizedBox.expand(
                 child: Container(
                     child: Column(children: [
-              LightSettingsSheetHeader(),
+                    BlocProvider.value(
+                    value: _managedLightSourceBloc,
+                    child: LightSettingsSheetHeader(lightSource)),
               BlocProvider.value(
                 value: _lightSettingsBloc,
-                  child: LightSettingsSheetNavigation(),
+                  child: BlocProvider.value(
+                    value: _managedLightSourceBloc,
+                    child:LightSettingsSheetNavigation(),
+                  ),
               ),
               Expanded(
                   child: Container(
