@@ -96,9 +96,18 @@ class EffectsLightSettings extends StatelessWidget {
           child: Container(
               decoration: roundedCardDecoration,
               margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 8),
-              child: ListView(
-                children: Effect.values // todo: load effects from WLED instance
-                    .asMap()
+              child: BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
+    builder: (BuildContext context, List<LightSource> state) {
+    int index = 0;
+    for (index; index < state.length; index++) {
+    if (state[index].id == lightSource.id) {
+    lightSource = state[index];
+    break;
+    }
+    }
+      return ListView(
+    children: Effect.values // todo: load effects from WLED instance
+        .asMap()
                     .entries
                     .map((entry) {
                       var currentEffect = entry.value;
@@ -140,7 +149,7 @@ class EffectsLightSettings extends StatelessWidget {
                     })
                     .expand((element) => element)
                     .toList(),
-              )))
+              );})))
     ]);
   }
 }
