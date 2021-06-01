@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
+import 'package:light_master_app/modules/dashboard/bloc/light_settings_sheet_bloc.dart';
+import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
+import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
 import 'package:provider/provider.dart';
 
-import 'light_settings_sheet.dart';
+import '../modules/dashboard/screens/light_settings_sheet.dart';
 
 class LMCard extends StatelessWidget {
   final double turnedOnElevation = 12;
@@ -18,11 +22,14 @@ class LMCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _managedLightSourceBloc =
+    BlocProvider.of<ManagedLightSourceBloc>(context);
     return /*Consumer<LightSource>(
         builder: (context, lightSource, child) =>*/
         GestureDetector(
       onTap: () {
         lightSource.isTurnedOn = !lightSource.isTurnedOn;
+        _managedLightSourceBloc.add(ManagedLightSourceChangeEvent(lightSource));
       },
       onLongPress: () {
         showModalBottomSheet(
@@ -33,7 +40,13 @@ class LMCard extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext bc) {
-              return LightSettingsSheet(lightSource: lightSource);
+              return MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(value: _managedLightSourceBloc,),
+                    BlocProvider(create: (context) => LightSettingsSheetBloc())
+                  ],
+                  child: LightSettingsSheet(lightSource: lightSource)
+              );
             });
       },
       child: Stack(children: [
@@ -41,7 +54,8 @@ class LMCard extends StatelessWidget {
             width: 160,
             height: 160,
             child: Card(
-              color: lightSource.isTurnedOn ? Colors.grey : shadowColor,
+              color: lightSource.light is SolidLight ? (lightSource.light as SolidLight).color :
+                lightSource.isTurnedOn ? Colors.grey : shadowColor,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Stack(children: [

@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:light_master_app/core/models/light.dart';
 import 'package:light_master_app/core/models/light_source.dart';
+import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
+import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
 import 'package:light_master_app/widgets/slider.dart';
 
 class EffectsLightSettings extends StatelessWidget {
@@ -14,14 +17,15 @@ class EffectsLightSettings extends StatelessWidget {
   final double sliderIconSize = 24;
 
   final double dividerHorizontalPadding = 15;
+  LightSource lightSource;
+  // end
+  EffectsLightSettings(this.lightSource);
 
   @override
   Widget build(BuildContext context) {
     // start: debug code
     var effectLight = EffectLight(Effect.Android, 1, 1);
-    var lightSource = LightSource("1.1.1.1", "light", true, effectLight);
-    // end
-
+    final _managedLightSourceBloc = BlocProvider.of<ManagedLightSourceBloc>(context);
     // was necessary since the state could not be altered while being
     // constructed, therefore the state alteration was scheduled via
     // the future callback. But this should now be solvable via your BLoC sink.
@@ -57,9 +61,9 @@ class EffectsLightSettings extends StatelessWidget {
                           // set new brightness value here
 
                           // previous code:
-                          //lightSource.light =
-                          // EffectLight(effectLight.effect,
-                          //     newBrightness, effectLight.speed)
+                          lightSource.light =
+                           EffectLight(effectLight.effect,
+                               newBrightness, effectLight.speed);
                         }))
                       ],
                     ),
@@ -78,10 +82,10 @@ class EffectsLightSettings extends StatelessWidget {
                           // set the new speed value here
 
                           // previous code:
-                          // lightSource.light = EffectLight(
-                          //   effectLight.effect,
-                          //   effectLight.brightness,
-                          //   newSpeed)
+                           lightSource.light = EffectLight(
+                             effectLight.effect,
+                             effectLight.brightness,
+                             newSpeed);
                         }))
                       ],
                     )
@@ -105,9 +109,11 @@ class EffectsLightSettings extends StatelessWidget {
                             currentEffect.toString(),
                           ),
                           onTap: () {
-                            var effectLight = lightSource.light as EffectLight;
+                            var effectLight = lightSource.light is EffectLight ?
+                            lightSource.light as EffectLight : defaultEffectLight;
                             lightSource.light = EffectLight(currentEffect,
                                 effectLight.brightness, effectLight.speed);
+                            _managedLightSourceBloc.add(ManagedLightSourceChangeEvent(lightSource));
                           },
                           trailing: lightSource.light is EffectLight &&
                                   (lightSource.light as EffectLight).effect ==

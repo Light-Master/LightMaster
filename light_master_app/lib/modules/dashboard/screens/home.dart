@@ -11,6 +11,8 @@ import 'package:light_master_app/widgets/card.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _managedLightSourceBloc = BlocProvider.of<ManagedLightSourceBloc>(
+    context);
     return CupertinoPageScaffold(
       // consumes model from app_model.dart
       child: CustomScrollView(slivers: <Widget>[
@@ -49,7 +51,11 @@ class Home extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(top: 20),
-                  child: LMCard(state[index]),
+                  child:
+                    BlocProvider.value(
+                      value: _managedLightSourceBloc,
+                      child: LMCard(state[index]),
+                    )
                 );
               },
               childCount: state.length,

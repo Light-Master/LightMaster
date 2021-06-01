@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 abstract class Light {}
 
 class SolidLight extends Light {
-  final Color color;
+  final Color _color;
 
-  SolidLight(this.color);
+  SolidLight(this._color);
+
+  Color get color => _color;
 }
 
 class EffectLight extends Light {

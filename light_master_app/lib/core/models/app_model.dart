@@ -7,19 +7,14 @@ class AppModel extends ChangeNotifier {
   void addLightSource(LightSource lightSource) {
     if (lightSource != null) {
       lightSources.add(lightSource);
-      lightSource.addListener(onLightSourceChanged);
-      notifyListeners();
     }
   }
 
   void removeLightSource(LightSource lightSource) {
-    lightSource.removeListener(onLightSourceChanged);
     lightSources.remove(lightSource);
-    notifyListeners();
   }
 
   void onLightSourceChanged() {
     print("received change");
-    notifyListeners();
   }
 }
