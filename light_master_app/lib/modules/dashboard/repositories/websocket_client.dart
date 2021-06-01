@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:async/async.dart';
 import 'package:web_socket_channel/io.dart';
 
-class WebsocketClient {
+class WledWebSocketClient {
   var _websocketClient;
   var _multiStream;
   var _stateStream;
   var _infoStream;
 
-  WebsocketClient({
+  WledWebSocketClient({
     String baseUrl,
   }) {
     _websocketClient = IOWebSocketChannel.connect('ws://$baseUrl/ws');
