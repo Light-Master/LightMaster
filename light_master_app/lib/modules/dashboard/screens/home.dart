@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
         CupertinoSliverNavigationBar(
             largeTitle: Text('Lights'),
             trailing: TextButton(
-                child: Text("Add"),
+                child: Icon(CupertinoIcons.add),
                 onPressed: () => showModalBottomSheet(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
