@@ -5,11 +5,30 @@ import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_blo
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
 import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
+import 'package:tuple/tuple.dart';
 
 class AddLight extends StatelessWidget {
   final roundedSheetRadius = BorderRadius.only(
       topLeft: const Radius.circular(35), topRight: const Radius.circular(35));
-  final addressEditingController = TextEditingController(text: 'IP');
+  final addressEditingController = TextEditingController();
+
+  final debugNetworkAddresses = [
+    Tuple2("Instance 1", "8.70.129.107"),
+    Tuple2("Instance 2", "195.165.111.105"),
+    Tuple2("Instance 3", "233.76.207.248"),
+    Tuple2("Instance 4", "45.102.68.169"),
+    Tuple2("Instance 5", "48.105.22.76"),
+    Tuple2("Instance 6", "78.222.118.231"),
+    Tuple2("Instance 7", "251.119.177.152"),
+    Tuple2("Instance 8", "65.153.60.226"),
+    Tuple2("Instance 9", "116.222.230.13"),
+    Tuple2("Instance 10", "83.22.167.64"),
+    Tuple2("Instance 11", "211.26.235.252"),
+    Tuple2("Instance 12", "97.34.228.57"),
+    Tuple2("Instance 13", "70.56.50.122"),
+    Tuple2("Instance 14", "171.27.87.132"),
+    Tuple2("Instance 15", "166.108.153.126")
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,49 +51,48 @@ class AddLight extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white, borderRadius: roundedSheetRadius),
                   child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            child: Container(
-                                alignment: Alignment.center,
-                                child: Text('Add Light',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25))))
-                      ])),
+                    children: [
+                      Expanded(
+                          child: Container(
+                              alignment: Alignment.center,
+                              child: Text('Add Light',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25))))
+                    ],
+                  )),
               Expanded(
                   child: SingleChildScrollView(
                 child: Column(children: <Widget>[
                   Container(
-                      color: Color.fromARGB(255, 225, 225, 225),
-                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Column(children: <Widget>[
-                        Divider(
-                          color: Color.fromARGB(0, 0, 0, 225),
-                          height: 10,
-                          thickness: 1,
-                          indent: 0,
-                        ),
-                        CupertinoTextField(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          textAlign: TextAlign.center,
-                          controller: addressEditingController,
-                          placeholder: "Address",
-                        ),
-                        Divider(
-                          color: Color.fromARGB(255, 225, 225, 225),
-                          height: 10,
-                          thickness: 1,
-                          indent: 0,
-                        ),
-                      ])),
-                  Container(
-                      color: Colors.white70,
-                      padding:
-                          EdgeInsets.only(top: 20.0, left: 20.0, bottom: 10.0),
-                      // TODO: add auto search function to locate nearby lights on the network
-                      child: Text("wow"))
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      margin: EdgeInsets.only(top: 10, bottom: 10),
+                      child: CupertinoTextField(
+                        placeholder: "Enter Network IP manually",
+                        controller: addressEditingController,
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        textAlign: TextAlign.center,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16))),
+                      )),
+                  SizedBox(
+                      height: 307,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16))),
+                          margin:
+                              EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                          // TODO: add auto search function to locate nearby lights on the network
+                          child: ListView(
+                            children: debugNetworkAddresses
+                                .map((ad) => ListTile(
+                                    title: Text("${ad.item1} (${ad.item2})")))
+                                .toList(),
+                          )))
                 ]),
               )),
               Container(
