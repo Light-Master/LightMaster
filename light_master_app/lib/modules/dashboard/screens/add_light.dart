@@ -86,11 +86,14 @@ class AddLight extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(16))),
                           margin:
                               EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                          // TODO: add auto search function to locate nearby lights on the network
+                          padding: EdgeInsets.only(top: 2, bottom: 2),
                           child: ListView(
+                            // TODO: replace with fetched addresses
                             children: debugNetworkAddresses
-                                .map((ad) => ListTile(
-                                    title: Text("${ad.item1} (${ad.item2})")))
+                                .asMap()
+                                .entries
+                                .map(buildSelectableLight)
+                                .expand((element) => element)
                                 .toList(),
                           )))
                 ]),
@@ -133,5 +136,41 @@ class AddLight extends StatelessWidget {
                 ),
               )
             ]));
+  }
+
+  Iterable<Widget> buildSelectableLight(
+      MapEntry<int, Tuple2<String, String>> lightEntry) {
+    var index = lightEntry.key;
+    var light = lightEntry.value;
+
+    var lightTile = ListTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(light.item1),
+            Container(
+                margin: EdgeInsets.only(top: 3),
+                child: Text(light.item2,
+                    style: TextStyle(color: Colors.grey[500], fontSize: 12)))
+          ],
+        ),
+        onTap: () {
+          // todo: emit event to BloC component that in turn triggers redrawing
+        },
+        trailing: index == 0
+            ? Icon(
+                CupertinoIcons.checkmark_alt,
+                color: Colors.blue,
+              )
+            : null);
+
+    return index == 0
+        ? [lightTile]
+        : [
+            Padding(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                child: Divider(height: 1, color: Colors.grey[400])),
+            lightTile
+          ];
   }
 }

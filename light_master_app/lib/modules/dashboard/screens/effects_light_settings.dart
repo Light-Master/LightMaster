@@ -94,6 +94,7 @@ class EffectsLightSettings extends StatelessWidget {
           child: Container(
               decoration: roundedCardDecoration,
               margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 8),
+              padding: EdgeInsets.only(top: 2, bottom: 2),
               child: BlocBuilder<ManagedLightSourceBloc, List<LightSource>>(
                   builder: (BuildContext context, List<LightSource> state) {
                 int index = 0;
