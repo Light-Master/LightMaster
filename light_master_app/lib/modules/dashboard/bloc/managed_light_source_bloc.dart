@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 
 class ManagedLightSourceBloc
     extends Bloc<ManagedLightSourceEvent, List<LightSource>> {

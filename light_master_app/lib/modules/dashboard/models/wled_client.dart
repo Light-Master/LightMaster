@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:light_master_app/core/models/light.dart';
-import 'package:light_master_app/core/models/light_source.dart';
-import 'dart:io';
 
-class WLedClient{
-  Future<List<LightSource>> detectLeds() async{
+import 'light.dart';
+import 'light_source.dart';
+
+class WLedClient {
+  Future<List<LightSource>> detectLeds() async {
     //sleep(Duration(seconds: 10));
     return [
       /*put your items here*/

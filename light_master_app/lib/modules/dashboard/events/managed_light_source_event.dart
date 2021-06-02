@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:light_master_app/core/models/light_source.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 
 abstract class ManagedLightSourceEvent {}
 

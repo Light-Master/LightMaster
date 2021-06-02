@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:light_master_app/core/models/light_source.dart';
+import 'light_source.dart';
 
 class AppModel extends ChangeNotifier {
   final List<LightSource> lightSources = [];

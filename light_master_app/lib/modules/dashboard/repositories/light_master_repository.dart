@@ -1,13 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:http_interceptor/http_client_with_interceptor.dart';
-import 'package:light_master_app/core/models/light_source.dart';
-import 'package:light_master_app/modules/dashboard/repositories/websocket_client.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:light_master_app/utils/helpers/wled_http_interceptor.dart';
 
 class LightMasterRepository {

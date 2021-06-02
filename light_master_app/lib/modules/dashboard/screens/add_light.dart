@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
-import 'package:light_master_app/modules/dashboard/bloc/add_light_bloc.dart';
-import 'package:light_master_app/core/models/light.dart';
-import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
+import 'package:light_master_app/modules/dashboard/models/light.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 
 class AddLight extends StatelessWidget {
   final addressEditingController = TextEditingController(text: 'IP');

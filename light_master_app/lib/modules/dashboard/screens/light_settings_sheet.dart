@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/bloc/light_settings_sheet_bloc.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/screens/light_settings_sheet_footer.dart';
 import 'package:light_master_app/modules/dashboard/screens/light_settings_sheet_navigation.dart';
-import 'package:provider/provider.dart';
 
 import 'effects_light_settings.dart';
 import 'light_settings_sheet_header.dart';

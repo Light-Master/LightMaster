@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:light_master_app/core/models/light.dart';
-import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
+import 'package:light_master_app/modules/dashboard/models/light.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 
 import '../../../widgets/color_picker.dart';
 
@@ -17,11 +17,12 @@ class MonoLightSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var color = Colors.yellow[600];
-    if(lightSource.light is SolidLight) {
+    if (lightSource.light is SolidLight) {
       var light = lightSource.light as SolidLight;
       color = light.color;
     }
-    final _managedLightSourceBloc = BlocProvider.of<ManagedLightSourceBloc>(context);
+    final _managedLightSourceBloc =
+        BlocProvider.of<ManagedLightSourceBloc>(context);
 
     return CustomScrollView(
       slivers: [
@@ -39,7 +40,8 @@ class MonoLightSettings extends StatelessWidget {
                 child: LMColorPicker(color, (newColor) {
                   // pass the color to the BLoC here.
                   lightSource.light = SolidLight(newColor);
-                  _managedLightSourceBloc.add(ManagedLightSourceChangeEvent(lightSource));
+                  _managedLightSourceBloc
+                      .add(ManagedLightSourceChangeEvent(lightSource));
                   // code previously:
                   // lightSource.light = SolidLight(newColor)
                 }))
