@@ -56,4 +56,15 @@ class WledRestClient {
       throw new Exception('could not reach instance');
     }
   }
+
+  Future setWledInstanceState(String baseUrl, bool isTurnedOn) async {
+    final url = Uri.http(baseUrl, '/json/state');
+    final response =
+        await this._httpClient.post(url, body: jsonEncode({"on": isTurnedOn}));
+
+    if (response.statusCode != 200) {
+      throw new Exception(
+          'Tried turning on/off wled instance, expected 200, but got ${response.statusCode}');
+    }
+  }
 }

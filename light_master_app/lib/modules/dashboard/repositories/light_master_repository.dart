@@ -1,12 +1,9 @@
-import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:http/http.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
 
-import 'package:light_master_app/utils/helpers/wled_http_interceptor.dart';
-
 class LightMasterRepository {
-  static final httpClient =
-      HttpClientWithInterceptor.build(interceptors: [WledHttpInterceptor()]);
+  static final httpClient = Client();
   final WledRestClient wledRestClient = WledRestClient(httpClient: httpClient);
   // final WledWebSocketClient wledWebSocketClient =
   // WledWebSocketClient(baseUrl: "192.168.0.71");
@@ -27,6 +24,18 @@ class LightMasterRepository {
     return this
         .wledRestClient
         .setWledInstanceName(lightSource.networkAddress, lightSource.name);
+  }
+
+  Future turnOnLight(LightSource lightSource) {
+    return this
+        .wledRestClient
+        .setWledInstanceState(lightSource.networkAddress, true);
+  }
+
+  Future turnOffLight(LightSource lightSource) {
+    return this
+        .wledRestClient
+        .setWledInstanceState(lightSource.networkAddress, false);
   }
 
   Future propagateLightSourceLight(LightSource lightSource) {}
