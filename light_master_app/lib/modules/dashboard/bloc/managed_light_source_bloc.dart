@@ -19,7 +19,12 @@ class ManagedLightSourceBloc
     else if (event is ManagedLightSourceAddEvent) {
       print("add event");
       yield _lightSources;
-      _lightSources.add( await _client.getLightSource(event.ip));
+      try {
+        _lightSources.add(await _client.getLightSource(event.ip));
+      }
+      catch(error){
+        print(error.toString());
+      }
     } else if (event is ManagedLightSourceChangeEvent) {
       int index = 0;
       print("change event");

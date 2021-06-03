@@ -6,6 +6,7 @@ import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/models/wled_client.dart';
 import 'package:light_master_app/modules/dashboard/repositories/discover_devices.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
+import 'package:http/http.dart' as http;
 
 class AddLightEvent{}
 class AddLightAutoDetectEvent extends AddLightEvent{}
@@ -25,12 +26,18 @@ class AddLightBloc extends Bloc<AddLightEvent, List<LightSource>> {
 
   void autoDetect() async
   {
-    final devices = WLEDDiscoveryModel(WledRestClient());
-    final currentList = devices.discoveredServices;
-    // use ChangeNotifier
-    devices.addListener(() {
-      mapEventToState(AddLightDetectedEvent(devices.discoveredServices));
-    });
+    try {
+      final devices = WLEDDiscoveryModel(
+          WledRestClient(httpClient: http.Client()));
+      final currentList = devices.discoveredServices;
+      // use ChangeNotifier
+      devices.addListener(() {
+        mapEventToState(AddLightDetectedEvent(devices.discoveredServices));
+      });
+    }
+    catch(error){
+      print(error.toString());
+    }
 
   }
 
