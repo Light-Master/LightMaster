@@ -40,7 +40,7 @@ class ManagedLightSourceChangeEffectEvent extends ManagedLightSourceEvent {
 }
 
 class ManagedLightSourceTurnEvent extends ManagedLightSourceEvent {
-  ManagedLightSourceChangeEffectEvent(LightSource lightSource) {
+  ManagedLightSourceTurnEvent(LightSource lightSource) {
     _lightSource = lightSource;
   }
   LightSource _lightSource;

@@ -33,7 +33,7 @@ class LMCard extends StatelessWidget {
         GestureDetector(
       onTap: () {
         lightSource.isTurnedOn = !lightSource.isTurnedOn;
-        _managedLightSourceBloc.add(ManagedLightSourceChangeEvent(lightSource));
+        _managedLightSourceBloc.add(ManagedLightSourceTurnEvent(lightSource));
       },
       onLongPress: () {
         showModalBottomSheet(
