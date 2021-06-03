@@ -5,7 +5,7 @@ import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
 import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/models/wled_client.dart';
 
-enum AddLightEvent {manual_add, auto_detect}
+enum AddLightEvent {manual_add, auto_detect, detected}
 
 class AddLightBloc extends Bloc<AddLightEvent, Container>{
   AddLightBloc() : super(Container());

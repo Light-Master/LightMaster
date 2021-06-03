@@ -7,6 +7,7 @@ import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:light_master_app/modules/dashboard/bloc/light_settings_sheet_bloc.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
+import 'package:light_master_app/utils/helpers/color_resolver.dart';
 import 'package:provider/provider.dart';
 
 import '../modules/dashboard/screens/light_settings_sheet.dart';
@@ -24,6 +25,8 @@ class LMCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final _managedLightSourceBloc =
     BlocProvider.of<ManagedLightSourceBloc>(context);
+    Color color = lightSource.light is SolidLight ? (lightSource.light as SolidLight).color :
+    lightSource.isTurnedOn ? Colors.grey : shadowColor;
     return /*Consumer<LightSource>(
         builder: (context, lightSource, child) =>*/
         GestureDetector(
@@ -54,8 +57,7 @@ class LMCard extends StatelessWidget {
             width: 160,
             height: 160,
             child: Card(
-              color: lightSource.light is SolidLight ? (lightSource.light as SolidLight).color :
-                lightSource.isTurnedOn ? Colors.grey : shadowColor,
+              color: color,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Stack(children: [
@@ -64,13 +66,15 @@ class LMCard extends StatelessWidget {
                     bottom: 20,
                     right: 20,
                     child: Text(lightSource.name,
-                        textAlign: TextAlign.center))
+                        textAlign: TextAlign.center,
+                    style: TextStyle(color: ColorResolver.resolveTextForegroundColor(color)),))
               ]),
               shape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.all(
                 Radius.circular(35.0),
               )),
-              elevation: lightSource.isTurnedOn ? 0 : 12,
+              shadowColor: color,
+              elevation: lightSource.isTurnedOn ? 0 : 20,
               margin: EdgeInsets.all(10),
             )),
       ]),
