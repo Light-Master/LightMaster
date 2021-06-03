@@ -5,6 +5,7 @@ import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/models/wled_client.dart';
 import 'package:light_master_app/modules/dashboard/repositories/discover_devices.dart';
+import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
 
 class AddLightEvent{}
 class AddLightAutoDetectEvent extends AddLightEvent{}
@@ -24,7 +25,7 @@ class AddLightBloc extends Bloc<AddLightEvent, List<LightSource>> {
 
   void autoDetect() async
   {
-    final devices = WLEDDiscoveryModel();
+    final devices = WLEDDiscoveryModel(WledRestClient());
     final currentList = devices.discoveredServices;
     // use ChangeNotifier
     devices.addListener(() {
