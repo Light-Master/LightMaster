@@ -46,8 +46,16 @@ class LightSettingsSheetHeader extends StatelessWidget {
       var lightSourceNameTextFieldStyle =
           TextStyle(fontWeight: FontWeight.bold, fontSize: 25);
       return Container(
+          decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(35),
+                topRight: const Radius.circular(35),
+              )),
           height: 65,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -56,7 +64,6 @@ class LightSettingsSheetHeader extends StatelessWidget {
                       topLeft: const Radius.circular(35),
                     )),
                 alignment: AlignmentDirectional.centerStart,
-                padding: EdgeInsets.only(left: 16),
                 child: IconButton(
                     icon: Icon(CupertinoIcons.trash, color: fontColor),
                     onPressed: () {
@@ -70,7 +77,7 @@ class LightSettingsSheetHeader extends StatelessWidget {
                   color: backgroundColor,
                   alignment: AlignmentDirectional.center,
                   child: Container(
-                      width: 231,
+                      width: 150,
                       child: editing
                           ? CupertinoTextField(
                               controller: lightSourceNameController,
@@ -88,7 +95,6 @@ class LightSettingsSheetHeader extends StatelessWidget {
                       topRight: const Radius.circular(35),
                     )),
                 alignment: AlignmentDirectional.centerEnd,
-                padding: EdgeInsets.only(right: 16),
                 child: TextButton(
                     style: ButtonStyle(),
                     child: Icon(
