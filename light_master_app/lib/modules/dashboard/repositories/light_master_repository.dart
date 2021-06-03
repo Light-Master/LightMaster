@@ -43,16 +43,10 @@ class LightMasterRepository {
         .setWledInstanceName(lightSource.networkAddress, lightSource.name);
   }
 
-  Future turnOnLight(LightSource lightSource) {
+  Future turnLight(LightSource lightSource) {
     return this
         .wledRestClient
-        .setWledInstanceState(lightSource.networkAddress, true);
-  }
-
-  Future turnOffLight(LightSource lightSource) {
-    return this
-        .wledRestClient
-        .setWledInstanceState(lightSource.networkAddress, false);
+        .setWledInstanceState(lightSource.networkAddress, lightSource.isTurnedOn);
   }
 
   Future propagateLightSourceLight(LightSource lightSource) async {

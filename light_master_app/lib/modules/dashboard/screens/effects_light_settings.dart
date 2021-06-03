@@ -126,7 +126,7 @@ class EffectsLightSettings extends StatelessWidget {
                                   effectLight.brightness,
                                   effectLight.speed);
                               managedLightSourceBloc.add(
-                                  ManagedLightSourceChangeEvent(lightSource));
+                                  ManagedLightSourceChangeColorEvent(lightSource));
                             },
                             trailing: lightSource.light is EffectLight &&
                                     (lightSource.light as EffectLight).effect ==

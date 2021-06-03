@@ -41,7 +41,7 @@ class MonoLightSettings extends StatelessWidget {
                   // pass the color to the BLoC here.
                   lightSource.light = SolidLight(newColor);
                   _managedLightSourceBloc
-                      .add(ManagedLightSourceChangeEvent(lightSource));
+                      .add(ManagedLightSourceChangeColorEvent(lightSource));
                   // code previously:
                   // lightSource.light = SolidLight(newColor)
                 }))

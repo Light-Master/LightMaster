@@ -68,7 +68,7 @@ class LightSettingsSheetHeader extends StatelessWidget {
                     onPressed: () {
                       print(
                           "deleted light: ${lightSource.name} id: ${lightSource.id}");
-                      ManagedLightSourceRemoveEvent(lightSource);
+                      _managedLightSourceBloc.add(ManagedLightSourceRemoveEvent(lightSource));
                       Navigator.pop(context);
                     }),
               ),

@@ -20,13 +20,50 @@ class ManagedLightSourceBloc
       print("add event");
       yield _lightSources;
       try {
-        _lightSources.add(await _client.getLightSource(event.ip));
+        int index = 0;
+        for(; index < _lightSources.length; index++)
+          {
+            if(_lightSources[index].networkAddress == event.ip)
+              break;
+          }
+        if(index == _lightSources.length)
+          _lightSources.add(await _client.getLightSource(event.ip));
       } catch (error) {
         print(error.toString());
       }
     } else if (event is ManagedLightSourceChangeEvent) {
       int index = 0;
       print("change event");
+      for (; index < _lightSources.length; index++) {
+        if (_lightSources[index].id == event.lightSource.id) {
+          _lightSources[index] = event.lightSource;
+          break;
+        }
+      }
+    } else if (event is ManagedLightSourceChangeColorEvent) {
+      int index = 0;
+      print("change event");
+      _client.propagateLightSourceLight(event.lightSource);
+      for (; index < _lightSources.length; index++) {
+        if (_lightSources[index].id == event.lightSource.id) {
+          _lightSources[index] = event.lightSource;
+          break;
+        }
+      }
+    } else if (event is ManagedLightSourceChangeNameEvent) {
+      int index = 0;
+      print("change event");
+      _client.propagateLightSourceLight(event.lightSource);
+      for (; index < _lightSources.length; index++) {
+        if (_lightSources[index].id == event.lightSource.id) {
+          _lightSources[index] = event.lightSource;
+          break;
+        }
+      }
+    } else if (event is ManagedLightSourceTurnEvent) {
+      int index = 0;
+      print("turn event");
+      _client.turnLight(event.lightSource);
       for (; index < _lightSources.length; index++) {
         if (_lightSources[index].id == event.lightSource.id) {
           _lightSources[index] = event.lightSource;
