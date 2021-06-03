@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
-import 'package:http/http.dart' as http;
 
 /// Provider model that allows to handle Bonsoir discoveries.
 class WLEDDiscoveryModel extends ChangeNotifier {
-  final WledRestClient wled = WledRestClient(httpClient: http.Client());
+  final WledRestClient wled;
   static const String type = '_http._tcp';
   final _controller = StreamController<List<LightSource>>();
 
@@ -24,7 +23,7 @@ class WLEDDiscoveryModel extends ChangeNotifier {
   StreamSubscription<BonsoirDiscoveryEvent> _subscription;
 
   /// Creates a new Bonsoir discovery model instance.
-  WLEDDiscoveryModel() {
+  WLEDDiscoveryModel(this.wled) {
     start();
   }
 
