@@ -7,8 +7,10 @@ class LightSource {
   bool _isTurnedOn;
   String _name;
   Light _light;
+  List<String> effects;
 
-  LightSource(this._networkAddress, this._name, this._isTurnedOn, this._light) {
+  LightSource(this._networkAddress, this._name, this._isTurnedOn, this._light,
+      this.effects) {
     _id = _lastId + 1;
     _lastId = _id;
   }

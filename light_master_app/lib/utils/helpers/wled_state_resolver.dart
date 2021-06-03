@@ -11,7 +11,9 @@ class WledStateResolver {
     final stateMap = statusMap['state'] as Map<String, dynamic>;
     final isTurnedOn = stateMap['on'] as bool;
     final mainSegment = stateMap['seg'][stateMap['mainseg']];
-    final effectsList = stateMap['effects'] as List<String>;
+    final testList = statusMap['effects'];
+    // TODO: only use whitelisted
+    final effectsList = testList.cast<String>().toList();
     Light light;
 
     if (mainSegment['fx'] == 0) {
@@ -25,6 +27,6 @@ class WledStateResolver {
       light = EffectLight(effectName, brigtness, speed);
     }
 
-    return LightSource(networkAddress, name, isTurnedOn, light);
+    return LightSource(networkAddress, name, isTurnedOn, light, effectsList);
   }
 }

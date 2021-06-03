@@ -17,8 +17,12 @@ class LightSettingsSheet extends StatelessWidget {
   final LightSource lightSourceCopy;
 
   LightSettingsSheet({Key key, this.lightSource})
-      : this.lightSourceCopy = LightSource(lightSource.networkAddress,
-            lightSource.name, lightSource.isTurnedOn, lightSource.light),
+      : this.lightSourceCopy = LightSource(
+            lightSource.networkAddress,
+            lightSource.name,
+            lightSource.isTurnedOn,
+            lightSource.light,
+            lightSource.effects),
         super(key: key);
 
   @override

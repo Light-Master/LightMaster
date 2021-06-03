@@ -8,7 +8,7 @@ import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/widgets/slider.dart';
 
 class EffectsLightSettings extends StatelessWidget {
-  final defaultEffectLight = EffectLight(Effect.Android.toString(), 50, 50);
+  final defaultEffectLight = EffectLight('Solid', 50, 50);
 
   final roundedCardDecoration = BoxDecoration(
       color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(16)));
@@ -24,7 +24,7 @@ class EffectsLightSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // start: debug code
-    var effectLight = EffectLight(Effect.Android.toString(), 1, 1);
+    var effectLight = EffectLight('Solid', 1, 1);
     final managedLightSourceBloc =
         BlocProvider.of<ManagedLightSourceBloc>(context);
     // was necessary since the state could not be altered while being
@@ -105,8 +105,7 @@ class EffectsLightSettings extends StatelessWidget {
                   }
                 }
                 return ListView(
-                  children: Effect
-                      .values // todo: load effects from WLED instance
+                  children: lightSource.effects
                       .asMap()
                       .entries
                       .map((entry) {
@@ -126,7 +125,8 @@ class EffectsLightSettings extends StatelessWidget {
                                   effectLight.brightness,
                                   effectLight.speed);
                               managedLightSourceBloc.add(
-                                  ManagedLightSourceChangeColorEvent(lightSource));
+                                  ManagedLightSourceChangeColorEvent(
+                                      lightSource));
                             },
                             trailing: lightSource.light is EffectLight &&
                                     (lightSource.light as EffectLight).effect ==
