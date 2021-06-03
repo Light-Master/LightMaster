@@ -8,10 +8,11 @@ import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:http/http.dart' as http;
 
-Stream<LightSource> discoverWLEDDevices() async* {
+Stream<List<LightSource>> discoverWLEDDevices() async* {
   const String name = '_http._tcp';
   final MDnsClient client = MDnsClient();
   final WledRestClient wled = WledRestClient(httpClient: http.Client());
+  List<LightSource> res = [];
 
   // Start the client with default options.
   await client.start();
@@ -25,14 +26,15 @@ Stream<LightSource> discoverWLEDDevices() async* {
         try {
           var state = await wled.fetchState(ip.address.address);
           var mainseg = state['state']['seg'][state['state']['mainseg']];
-          yield LightSource(
+          res.add(LightSource(
               ip.address.address,
               state['info']['name'],
               state['state']['on'],
               mainseg['fx'] == 0
                   ? SolidLight(Color.fromRGBO(mainseg['col'][0],
                       mainseg['col'][1], mainseg['col'][2], 1))
-                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx'])));
+          yield res;
         } catch (e) {
           log("${srv.name} is not a WLED-Instance");
         }
@@ -43,15 +45,15 @@ Stream<LightSource> discoverWLEDDevices() async* {
         try {
           var state = await wled.fetchState(ip.address.address);
           var mainseg = state['state']['seg'][state['state']['mainseg']];
-          yield LightSource(
+          res.add(LightSource(
               ip.address.address,
               state['info']['name'],
               state['state']['on'],
               mainseg['fx'] == 0
                   ? SolidLight(Color.fromRGBO(mainseg['col'][0],
                       mainseg['col'][1], mainseg['col'][2], 1))
-                  : EffectLight(
-                      mainseg['fx'], state['info']['bri'], mainseg['sx']));
+                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx'])));
+          yield res;
         } catch (e) {
           log("${srv.name} is not a WLED-Instance");
         }
