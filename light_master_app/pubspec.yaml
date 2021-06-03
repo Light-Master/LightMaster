@@ -39,6 +39,7 @@ dependencies:
   web_socket_channel: ^2.1.0
   http_interceptor: ^0.4.1
   multicast_dns: ^0.3.0
+  bonsoir: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

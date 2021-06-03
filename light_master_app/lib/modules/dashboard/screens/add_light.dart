@@ -5,12 +5,15 @@ import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_blo
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
 import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
+import 'package:light_master_app/modules/dashboard/repositories/discover_devices.dart';
 import 'package:tuple/tuple.dart';
 
 class AddLight extends StatelessWidget {
   final roundedSheetRadius = BorderRadius.only(
       topLeft: const Radius.circular(35), topRight: const Radius.circular(35));
   final addressEditingController = TextEditingController();
+
+  
 
   final debugNetworkAddresses = [
     Tuple2("Instance 1", "8.70.129.107"),
@@ -33,6 +36,12 @@ class AddLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final addLightBloc = BlocProvider.of<AddLightBloc>(context);
+  final devices = BonsoirDiscoveryModel();
+  final startList = devices.discoveredServices;
+  devices.addListener(() {
+    print('Updateed List:');
+    devices.discoveredServices.forEach((item){print(item.toString());});
+  });
 
     final managedLightSourceBloc =
         BlocProvider.of<ManagedLightSourceBloc>(context);
