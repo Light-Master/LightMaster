@@ -28,16 +28,32 @@ content-type: application/json
 
 ###
 
-# Set effect and effect speed
+# Set solid color
 POST http://{{address}}/json HTTP/1.1
 content-type: application/json
 
 {
-    "state": {
-        "seg": [
-      {
-        "id": 0,
-        "fx": 0,
-      }]
+  "seg": [
+    {
+      "col": [
+        [0,255,200]
+      ]
     }
+  ]
+}
+
+###
+
+# Set effect, brightness and speed
+POST http://{{address}}/json HTTP/1.1
+content-type: application/json
+
+{
+  "bri": 10,
+  "seg": [
+    {
+      "fx": 3,
+      "sx": 100
+    }
+  ]
 }
