@@ -34,7 +34,7 @@ Stream<List<LightSource>> discoverWLEDDevices() async* {
                   ? SolidLight(Color.fromRGBO(mainseg['col'][0],
                       mainseg['col'][1], mainseg['col'][2], 1))
                   : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx'])));
-          yield res;
+          yield [...res];
         } catch (e) {
           log("${srv.name} is not a WLED-Instance");
         }
@@ -53,7 +53,7 @@ Stream<List<LightSource>> discoverWLEDDevices() async* {
                   ? SolidLight(Color.fromRGBO(mainseg['col'][0],
                       mainseg['col'][1], mainseg['col'][2], 1))
                   : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx'])));
-          yield res;
+          yield [...res];
         } catch (e) {
           log("${srv.name} is not a WLED-Instance");
         }
