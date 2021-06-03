@@ -4,35 +4,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_radio_button_group/flutter_radio_button_group.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/models/wled_client.dart';
+import 'package:light_master_app/modules/dashboard/repositories/discover_devices.dart';
 
-enum AddLightEvent {manual_add, auto_detect, detected}
+class AddLightEvent{}
+class AddLightAutoDetectEvent extends AddLightEvent{}
+class AddLightDetectedEvent extends AddLightEvent{
+  List<LightSource> lightSources;
+  AddLightDetectedEvent(this.lightSources);
+}
+class AddLightSelectEvent extends AddLightEvent{
+  int id;
+  AddLightSelectEvent(this.id);
+}
 
-class AddLightBloc extends Bloc<AddLightEvent, Container> {
-  AddLightBloc() : super(Container());
-  final _client = WLedClient();
+class AddLightBloc extends Bloc<AddLightEvent, List<LightSource>> {
+  AddLightBloc() : super([]);
+  List<LightSource> _lightSources = [];
+  int selected;
+
+  void autoDetect() async
+  {
+    final devices = WLEDDiscoveryModel();
+    final currentList = devices.discoveredServices;
+    // use ChangeNotifier
+    devices.addListener(() {
+      mapEventToState(AddLightDetectedEvent(devices.discoveredServices));
+    });
+
+  }
 
   @override
-  Stream<Container> mapEventToState(AddLightEvent event) async* {
-    switch (event) {
-      case AddLightEvent.auto_detect:
-        yield Container(child: CircularProgressIndicator());
-        List<LightSource> leds = await _client.detectLeds();
-        yield Container(
-            child: Expanded(
-                flex: 20,
-                child: SingleChildScrollView(
-                    child: FlutterRadioButtonGroup(
-                  items: List<String>.generate(leds.length,
-                      (i) => "${leds[i].name} (${leds[i].networkAddress})"),
-                ))));
-        break;
-      case AddLightEvent.manual_add:
-        yield Container(
-            child: CupertinoTextField(
-          textAlign: TextAlign.center,
-          placeholder: 'IP',
-        ));
-        break;
-    }
+  Stream<List<LightSource>> mapEventToState(AddLightEvent event) async* {
+    if(event is AddLightAutoDetectEvent)
+      autoDetect();
+
+    if(event is AddLightDetectedEvent)
+      _lightSources = event.lightSources;
+
+    if(event is AddLightSelectEvent)
+      selected = event.id;
+
+    yield [..._lightSources];
+
   }
 }

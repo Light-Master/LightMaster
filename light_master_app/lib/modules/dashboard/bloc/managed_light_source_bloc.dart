@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
+import 'package:light_master_app/modules/dashboard/repositories/light_master_repository.dart';
 
 class ManagedLightSourceBloc
     extends Bloc<ManagedLightSourceEvent, List<LightSource>> {
   ManagedLightSourceBloc() : super([]);
   final List<LightSource> _lightSources = [];
+  final _client = LightMasterRepository();
 
   List<LightSource> get lightSources => _lightSources;
 
@@ -16,7 +18,8 @@ class ManagedLightSourceBloc
       _lightSources.clear();
     else if (event is ManagedLightSourceAddEvent) {
       print("add event");
-      _lightSources.add(event.lightSource);
+      yield _lightSources;
+      _lightSources.add( await _client.getLightSource(event.ip));
     } else if (event is ManagedLightSourceChangeEvent) {
       int index = 0;
       print("change event");
