@@ -23,9 +23,12 @@ class LMCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _managedLightSourceBloc =
-    BlocProvider.of<ManagedLightSourceBloc>(context);
-    Color color = lightSource.light is SolidLight ? (lightSource.light as SolidLight).color :
-    lightSource.isTurnedOn ? Colors.grey : shadowColor;
+        BlocProvider.of<ManagedLightSourceBloc>(context);
+    Color color = lightSource.light is SolidLight
+        ? (lightSource.light as SolidLight).color
+        : lightSource.isTurnedOn
+            ? Colors.grey
+            : shadowColor;
     return /*Consumer<LightSource>(
         builder: (context, lightSource, child) =>*/
         GestureDetector(
@@ -63,16 +66,20 @@ class LMCard extends StatelessWidget {
                     left: 20,
                     bottom: 20,
                     right: 20,
-                    child: Text(lightSource.name,
-                        textAlign: TextAlign.center,
-                    style: TextStyle(color: ColorResolver.resolveTextForegroundColor(color)),))
+                    child: Text(
+                      lightSource.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color:
+                              ColorResolver.resolveTextForegroundColor(color)),
+                    ))
               ]),
               shape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.all(
                 Radius.circular(35.0),
               )),
               shadowColor: color,
-              elevation: lightSource.isTurnedOn ? 0 : 20,
+              elevation: lightSource.isTurnedOn ? 0 : 18,
               margin: EdgeInsets.all(10),
             )),
       ]),
