@@ -21,12 +21,10 @@ class ManagedLightSourceBloc
       yield _lightSources;
       try {
         int index = 0;
-        for(; index < _lightSources.length; index++)
-          {
-            if(_lightSources[index].networkAddress == event.ip)
-              break;
-          }
-        if(index == _lightSources.length)
+        for (; index < _lightSources.length; index++) {
+          if (_lightSources[index].networkAddress == event.ip) break;
+        }
+        if (index == _lightSources.length)
           _lightSources.add(await _client.getLightSource(event.ip));
       } catch (error) {
         print(error.toString());
@@ -42,7 +40,7 @@ class ManagedLightSourceBloc
       }
     } else if (event is ManagedLightSourceChangeColorEvent) {
       int index = 0;
-      print("change event");
+      print("change color event");
       _client.propagateLightSourceLight(event.lightSource);
       for (; index < _lightSources.length; index++) {
         if (_lightSources[index].id == event.lightSource.id) {
@@ -52,7 +50,7 @@ class ManagedLightSourceBloc
       }
     } else if (event is ManagedLightSourceChangeNameEvent) {
       int index = 0;
-      print("change event");
+      print("change name event");
       _client.propagateLightSourceLight(event.lightSource);
       for (; index < _lightSources.length; index++) {
         if (_lightSources[index].id == event.lightSource.id) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:light_master_app/modules/dashboard/models/light.dart';
@@ -69,6 +70,7 @@ class WledRestClient {
 
   Future setSolidLight(String baseUrl, SolidLight solidLight) async {
     final url = Uri.http(baseUrl, '/json');
+    log('RGB: ${solidLight.color.red}, ${solidLight.color.green}, ${solidLight.color.blue}');
     final response = await this._httpClient.post(url,
         body: jsonEncode({
           "bri": 255,
@@ -76,10 +78,15 @@ class WledRestClient {
             {
               "fx": 0,
               "col": [
-                solidLight.color.red,
-                solidLight.color.blue,
-                solidLight.color.green
-              ]
+                [
+                  solidLight.color.red,
+                  solidLight.color.green,
+                  solidLight.color.blue
+                ],
+                [],
+                []
+              ],
+              "bri": 255
             }
           ]
         }));
