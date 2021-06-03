@@ -20,6 +20,8 @@ class LightMasterRepository {
     this.wledDiscoveryModel = WLEDDiscoveryModel(this.wledRestClient);
   }
 
+  WLEDDiscoveryModel get discoveryModel => wledDiscoveryModel;
+
   Future<List<String>> getEffectsList(String networkAddress) async {
     if (this.cachedEffectLists.containsKey(networkAddress)) {
       return this.cachedEffectLists[networkAddress];
