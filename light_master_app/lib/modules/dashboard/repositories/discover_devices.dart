@@ -50,7 +50,8 @@ Stream<LightSource> discoverWLEDDevices() async* {
               mainseg['fx'] == 0
                   ? SolidLight(Color.fromRGBO(mainseg['col'][0],
                       mainseg['col'][1], mainseg['col'][2], 1))
-                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+                  : EffectLight(
+                      mainseg['fx'], state['info']['bri'], mainseg['sx']));
         } catch (e) {
           log("${srv.name} is not a WLED-Instance");
         }
