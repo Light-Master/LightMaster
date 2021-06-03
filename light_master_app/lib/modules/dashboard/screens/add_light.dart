@@ -34,20 +34,22 @@ class AddLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final addLightBloc = BlocProvider.of<AddLightBloc>(context);
-    final devices = WLEDDiscoveryModel();
-    final startList = devices.discoveredServices;
-    devices.addListener(() {
-      print('Updated List:');
-      devices.discoveredServices.forEach((item) {
-        print(item.toString());
-      });
-    });
-    devices.discoverWLEDDevices.listen((event) {
-      print("Stream: ");
-      for (var item in event) {
-        print(item.toString());
-      }
-    });
+    // final devices = WLEDDiscoveryModel();
+    // final currentList = devices.discoveredServices;
+    // // use ChangeNotifier
+    // devices.addListener(() {
+    //   print('Updated List:');
+    //   devices.discoveredServices.forEach((item) {
+    //     print(item.toString());
+    //   });
+    // });
+    // // use Stream
+    // devices.discoverWLEDDevices.listen((event) {
+    //   print("Stream: ");
+    //   for (var item in event) {
+    //     print(item.toString());
+    //   }
+    // });
 
     final managedLightSourceBloc =
         BlocProvider.of<ManagedLightSourceBloc>(context);
