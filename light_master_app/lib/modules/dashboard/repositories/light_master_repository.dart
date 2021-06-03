@@ -79,8 +79,7 @@ class LightMasterRepository {
       await getEffectsList(networkAddress);
     }
 
-    return WledStateResolver.resolve(
-        networkAddress, statusMap, this.cachedEffectLists[networkAddress]);
+    return WledStateResolver.resolve(networkAddress, statusMap);
   }
 
   Future<int> getEffectIdByName(String networkAddress, String name) async {
