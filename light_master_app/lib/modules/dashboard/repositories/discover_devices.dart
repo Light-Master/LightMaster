@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bonsoir/bonsoir.dart';
 import 'package:flutter/material.dart';
-import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
-import 'package:http/http.dart' as http;
+import 'package:light_master_app/utils/helpers/wled_state_resolver.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -81,15 +79,7 @@ class WLEDDiscoveryModel extends ChangeNotifier {
       ResolvedBonsoirService service = event.service;
       try {
         var state = await wled.fetchState(service.ip);
-        var mainseg = state['state']['seg'][state['state']['mainseg']];
-        final light = LightSource(
-            service.ip,
-            state['info']['name'],
-            state['state']['on'],
-            mainseg['fx'] == 0
-                ? SolidLight(Color.fromRGBO(mainseg['col'][0][0],
-                    mainseg['col'][0][1], mainseg['col'][0][2], 1))
-                : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+        final light = WledStateResolver.resolve(service.ip, state);
         _resolvedServices.add(light);
         notifyListeners();
         _controller.sink.add(_resolvedServices);
@@ -110,15 +100,7 @@ class WLEDDiscoveryModel extends ChangeNotifier {
               ResourceRecordQuery.addressIPv4(srv.target))) {
         try {
           var state = await wled.fetchState(ip.address.address);
-          var mainseg = state['state']['seg'][state['state']['mainseg']];
-          final light = LightSource(
-              ip.address.address,
-              state['info']['name'],
-              state['state']['on'],
-              mainseg['fx'] == 0
-                  ? SolidLight(Color.fromRGBO(mainseg['col'][0][0],
-                      mainseg['col'][0][1], mainseg['col'][0][2], 1))
-                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+          final light = WledStateResolver.resolve(ip.address.address, state);
           _resolvedServices.add(light);
           notifyListeners();
           _controller.sink.add(_resolvedServices);
@@ -132,15 +114,7 @@ class WLEDDiscoveryModel extends ChangeNotifier {
               ResourceRecordQuery.addressIPv6(srv.target))) {
         try {
           var state = await wled.fetchState(ip.address.address);
-          var mainseg = state['state']['seg'][state['state']['mainseg']];
-          final light = LightSource(
-              ip.address.address,
-              state['info']['name'],
-              state['state']['on'],
-              mainseg['fx'] == 0
-                  ? SolidLight(Color.fromRGBO(mainseg['col'][0][0],
-                      mainseg['col'][0][1], mainseg['col'][0][2], 1))
-                  : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+          final light = WledStateResolver.resolve(ip.address.address, state);
           _resolvedServices.add(light);
           notifyListeners();
           _controller.sink.add(_resolvedServices);
