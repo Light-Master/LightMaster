@@ -1,12 +1,10 @@
-import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:http/http.dart';
+import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
 
-import 'package:light_master_app/utils/helpers/wled_http_interceptor.dart';
-
 class LightMasterRepository {
-  static final httpClient =
-      HttpClientWithInterceptor.build(interceptors: [WledHttpInterceptor()]);
+  static final httpClient = Client();
   final WledRestClient wledRestClient = WledRestClient(httpClient: httpClient);
   // final WledWebSocketClient wledWebSocketClient =
   // WledWebSocketClient(baseUrl: "192.168.0.71");
@@ -29,5 +27,28 @@ class LightMasterRepository {
         .setWledInstanceName(lightSource.networkAddress, lightSource.name);
   }
 
-  Future propagateLightSourceLight(LightSource lightSource) {}
+  Future turnOnLight(LightSource lightSource) {
+    return this
+        .wledRestClient
+        .setWledInstanceState(lightSource.networkAddress, true);
+  }
+
+  Future turnOffLight(LightSource lightSource) {
+    return this
+        .wledRestClient
+        .setWledInstanceState(lightSource.networkAddress, false);
+  }
+
+  Future propagateLightSourceLight(LightSource lightSource) {
+    if (lightSource.light is SolidLight) {
+      return this.wledRestClient.setSolidLight(
+          lightSource.networkAddress, lightSource.light as SolidLight);
+    } else {
+      return Future.delayed(Duration(seconds: 0));
+
+      // unsupported..
+      // return this.wledRestClient.setEffectsLight(
+      //     lightSource.networkAddress, lightSource.light as EffectLight);
+    }
+  }
 }

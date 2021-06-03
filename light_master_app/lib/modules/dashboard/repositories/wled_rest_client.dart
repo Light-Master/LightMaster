@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:meta/meta.dart';
 
 class WledRestClient {
@@ -44,16 +45,64 @@ class WledRestClient {
     return jsonDecode(response.body);
   }
 
-  Future setWledInstanceName(String baseUrl, name) async {
-    final url = Uri.http(
-        baseUrl, 'settings/ui', {'DS': Uri.encodeQueryComponent(name)});
-    final response = await this._httpClient.post(url, headers: {
-      "Accept": "application/xml",
-      "content-type": "xapplication/x-www-form-urlencoded"
-    });
+  Future setWledInstanceName(String baseUrl, String name) async {
+    final url = Uri.http(baseUrl, 'settings/ui', {'DS': name});
+
+    try {
+      await this._httpClient.post(url,
+          headers: {"Content-Type": "xapplication/x-www-form-urlencoded"});
+    } catch (_) {
+      // expected, WLED returns faulty response here which causes dart to crash.
+    }
+  }
+
+  Future setWledInstanceState(String baseUrl, bool isTurnedOn) async {
+    final url = Uri.http(baseUrl, '/json/state');
+    final response =
+        await this._httpClient.post(url, body: jsonEncode({"on": isTurnedOn}));
 
     if (response.statusCode != 200) {
-      throw new Exception('could not reach instance');
+      throw new Exception(
+          'Tried turning on/off wled instance, expected 200, but got ${response.statusCode}');
+    }
+  }
+
+  Future setSolidLight(String baseUrl, SolidLight solidLight) async {
+    final url = Uri.http(baseUrl, '/json');
+    final response = await this._httpClient.post(url,
+        body: jsonEncode({
+          "bri": 255,
+          "seg": [
+            {
+              "fx": 0,
+              "col": [
+                solidLight.color.red,
+                solidLight.color.blue,
+                solidLight.color.green
+              ]
+            }
+          ]
+        }));
+
+    if (response.statusCode != 200) {
+      throw new Exception(
+          "Tried setting solid color, expected 200, but got ${response.statusCode}");
+    }
+  }
+
+  Future setEffectsLight(String baseUrl, EffectLight effectLight) async {
+    final url = Uri.http(baseUrl, '/json');
+    final response = await this._httpClient.post(url,
+        body: jsonEncode({
+          "bri": effectLight.brightness,
+          "seg": [
+            {"fx": 5, "sx": effectLight.speed}
+          ]
+        }));
+
+    if (response.statusCode != 200) {
+      throw new Exception(
+          "Tried setting effect color, expected 200, but got ${response.statusCode}");
     }
   }
 }
