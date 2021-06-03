@@ -78,7 +78,7 @@ class LMCard extends StatelessWidget {
                 Radius.circular(35.0),
               )),
               shadowColor: color,
-              elevation: lightSource.isTurnedOn ? 0 : 18,
+              elevation: lightSource.isTurnedOn ? 18 : 0,
               margin: EdgeInsets.all(10),
             )),
       ]),
