@@ -1,38 +1,35 @@
+@address = 192.168.0.71:80
+
 # Get complete json doc
-GET http://192.168.0.71:80/json HTTP/1.1
+GET http://{{address}}/json HTTP/1.1
 content-type: application/json
 
-GET http://plattenspieler.local/json HTTP/1.1
-content-type: application/json
+###
 
-POST http://plattenspieler.local/settings/ui?DS=Plattenspieler HTTP/1.1
+# Set name
+POST http://{{address}}/settings/ui?DS=Plattenspieler HTTP/1.1
 content-type: xapplication/x-www-form-urlencoded
 
-POST http://plattenspieler.local/json/state HTTP/1.1
+### 
+
+# Enable light
+POST http://{{address}}/json/state HTTP/1.1
 content-type: application/json
 
 {
     "on": true
 }
+
+###
 
 # Get effects list
-GET http://192.168.0.71:80/json/eff HTTP/1.1
+GET http://{{address}}/json/eff HTTP/1.1
 content-type: application/json
 
-# Turn light on / off
-POST http://192.168.0.71/json HTTP/1.1
-content-type: application/json
-
-{
-    "on": true
-}
-
-# Set light name
-POST http://192.168.0.71/settings/ui?DS=TEST HTTP/1.1
-content-type: xapplication/x-www-form-urlencoded
+###
 
 # Set effect and effect speed
-POST http://192.168.0.71/json HTTP/1.1
+POST http://{{address}}/json HTTP/1.1
 content-type: application/json
 
 {
