@@ -1,16 +1,19 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
-import 'package:light_master_app/modules/dashboard/repositories/discover_devices.dart';
-import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
-import 'package:http/http.dart' as http;
+import 'package:light_master_app/modules/dashboard/repositories/light_master_repository.dart';
 
-class AddLightEvent{}
-class AddLightAutoDetectEvent extends AddLightEvent{}
-class AddLightDetectedEvent extends AddLightEvent{
+class AddLightEvent {}
+
+class AddLightAutoDetectEvent extends AddLightEvent {}
+
+class AddLightDetectedEvent extends AddLightEvent {
   List<LightSource> lightSources;
   AddLightDetectedEvent(this.lightSources);
 }
-class AddLightSelectEvent extends AddLightEvent{
+
+class AddLightSelectEvent extends AddLightEvent {
   int id;
   AddLightSelectEvent(this.id);
 }
@@ -19,36 +22,26 @@ class AddLightBloc extends Bloc<AddLightEvent, List<LightSource>> {
   AddLightBloc() : super([]);
   List<LightSource> _lightSources = [];
   int selected;
+  final LightMasterRepository _repo = LightMasterRepository();
 
-  void autoDetect() async
-  {
+  void autoDetect() async {
     try {
-      final devices = WLEDDiscoveryModel(
-          WledRestClient(httpClient: http.Client()));
-      final currentList = devices.discoveredServices;
-      // use ChangeNotifier
-      devices.addListener(() {
-        mapEventToState(AddLightDetectedEvent(devices.discoveredServices));
+      _repo.getAutoDiscoveredLightSources().listen((list) {
+        add(AddLightDetectedEvent(list));
       });
-    }
-    catch(error){
+    } catch (error) {
       print(error.toString());
     }
-
   }
 
   @override
   Stream<List<LightSource>> mapEventToState(AddLightEvent event) async* {
-    if(event is AddLightAutoDetectEvent)
-      autoDetect();
+    if (event is AddLightAutoDetectEvent) autoDetect();
 
-    if(event is AddLightDetectedEvent)
-      _lightSources = event.lightSources;
+    if (event is AddLightDetectedEvent) _lightSources = event.lightSources;
 
-    if(event is AddLightSelectEvent)
-      selected = event.id;
+    if (event is AddLightSelectEvent) selected = event.id;
 
     yield [..._lightSources];
-
   }
 }

@@ -21,14 +21,13 @@ class ManagedLightSourceBloc
       yield _lightSources;
       try {
         _lightSources.add(await _client.getLightSource(event.ip));
-      }
-      catch(error){
+      } catch (error) {
         print(error.toString());
       }
     } else if (event is ManagedLightSourceChangeEvent) {
       int index = 0;
       print("change event");
-      for (index; index < _lightSources.length; index++) {
+      for (; index < _lightSources.length; index++) {
         if (_lightSources[index].id == event.lightSource.id) {
           _lightSources[index] = event.lightSource;
           break;
