@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:light_master_app/core/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/bloc/add_light_bloc.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
+import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/screens/add_light.dart';
 
 import 'package:light_master_app/widgets/card.dart';
@@ -11,15 +11,15 @@ import 'package:light_master_app/widgets/card.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _managedLightSourceBloc = BlocProvider.of<ManagedLightSourceBloc>(
-    context);
+    final _managedLightSourceBloc =
+        BlocProvider.of<ManagedLightSourceBloc>(context);
     return CupertinoPageScaffold(
       // consumes model from app_model.dart
       child: CustomScrollView(slivers: <Widget>[
         CupertinoSliverNavigationBar(
             largeTitle: Text('Lights'),
             trailing: TextButton(
-                child: Text("Add"),
+                child: Icon(CupertinoIcons.add),
                 onPressed: () => showModalBottomSheet(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -49,14 +49,12 @@ class Home extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 20),
-                  child:
-                    BlocProvider.value(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 20),
+                    child: BlocProvider.value(
                       value: _managedLightSourceBloc,
                       child: LMCard(state[index]),
-                    )
-                );
+                    ));
               },
               childCount: state.length,
             ),

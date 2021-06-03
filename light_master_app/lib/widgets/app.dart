@@ -14,6 +14,17 @@ class App extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+    // // var lightSource = LightSource(
+    // //     "192.168.0.71", "NOT TESTING NAME", false, SolidLight(Colors.red));
+    // // var repo = LightMasterRepository();
+    // // repo.getEffectsList(lightSource).then(print);
+
+    // repo
+    //     .getLightSourceName(lightSource.networkAddress)
+    //     .then(print)
+    //     .then((_) => repo.setLightSourceName(lightSource))
+    //     .then((value) => repo.getLightSourceName(lightSource.networkAddress));
+
     return CupertinoApp(
         theme: const CupertinoThemeData(
           brightness: Brightness.light,
@@ -23,9 +34,7 @@ class App extends StatelessWidget {
             BlocProvider(
               create: (BuildContext context) => ManagedLightSourceBloc(),
             ),
-            BlocProvider(
-                create: (BuildContext context) => AddLightBloc()
-            ),
+            BlocProvider(create: (BuildContext context) => AddLightBloc()),
           ],
           child: Home(),
         ),
