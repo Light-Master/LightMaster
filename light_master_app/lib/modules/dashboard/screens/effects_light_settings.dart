@@ -51,7 +51,7 @@ class EffectsLightSettings extends StatelessWidget {
                       children: [
                         Expanded(
                             child: LMSlider(
-                                effectLight.brightness,
+                                effectLight.brightness.toDouble(),
                                 0,
                                 100,
                                 Icon(
@@ -71,7 +71,7 @@ class EffectsLightSettings extends StatelessWidget {
                       children: [
                         Expanded(
                             child: LMSlider(
-                                effectLight.speed,
+                                effectLight.speed.toDouble(),
                                 0,
                                 100,
                                 Icon(

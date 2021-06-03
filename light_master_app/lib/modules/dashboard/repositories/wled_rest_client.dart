@@ -91,7 +91,7 @@ class WledRestClient {
   }
 
   Future setEffectsLight(
-      String baseUrl, int effectId, double brightness, double speed) async {
+      String baseUrl, int effectId, int brightness, int speed) async {
     final url = Uri.http(baseUrl, '/json');
     final response = await this._httpClient.post(url,
         body: jsonEncode({
