@@ -32,4 +32,9 @@ class LightSource {
   set light(Light newLight) {
     this._light = newLight;
   }
+
+  @override
+  String toString() {
+    return _name + ' - ' + _networkAddress;
+  }
 }
