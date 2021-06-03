@@ -7,8 +7,8 @@ content-type: application/json
 ###
 
 # Set name
-POST http://{{address}}/settings/ui?DS=Plattenspieler HTTP/1.1
-content-type: xapplication/x-www-form-urlencoded
+POST http://{{address}}/settings/ui?DS=Plattenspieler1 HTTP/1.1
+Content-Type: xapplication/x-www-form-urlencoded
 
 ### 
 
@@ -28,15 +28,17 @@ content-type: application/json
 
 ###
 
-# Set solid color
+# Set solid white color
 POST http://{{address}}/json HTTP/1.1
 content-type: application/json
 
 {
+  "bri": 255,
   "seg": [
     {
+      "fx": 0,
       "col": [
-        [0,255,200]
+        [255,255,255]
       ]
     }
   ]
@@ -52,7 +54,7 @@ content-type: application/json
   "bri": 10,
   "seg": [
     {
-      "fx": 3,
+      "fx": 0,
       "sx": 100
     }
   ]

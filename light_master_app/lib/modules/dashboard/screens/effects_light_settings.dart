@@ -8,7 +8,7 @@ import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/widgets/slider.dart';
 
 class EffectsLightSettings extends StatelessWidget {
-  final defaultEffectLight = EffectLight(Effect.Android, 50, 50);
+  final defaultEffectLight = EffectLight(Effect.Android.toString(), 50, 50);
 
   final roundedCardDecoration = BoxDecoration(
       color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(16)));
@@ -24,7 +24,7 @@ class EffectsLightSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // start: debug code
-    var effectLight = EffectLight(Effect.Android, 1, 1);
+    var effectLight = EffectLight(Effect.Android.toString(), 1, 1);
     final managedLightSourceBloc =
         BlocProvider.of<ManagedLightSourceBloc>(context);
     // was necessary since the state could not be altered while being
@@ -121,8 +121,10 @@ class EffectsLightSettings extends StatelessWidget {
                               var effectLight = lightSource.light is EffectLight
                                   ? lightSource.light as EffectLight
                                   : defaultEffectLight;
-                              lightSource.light = EffectLight(currentEffect,
-                                  effectLight.brightness, effectLight.speed);
+                              lightSource.light = EffectLight(
+                                  currentEffect.toString(),
+                                  effectLight.brightness,
+                                  effectLight.speed);
                               managedLightSourceBloc.add(
                                   ManagedLightSourceChangeEvent(lightSource));
                             },
