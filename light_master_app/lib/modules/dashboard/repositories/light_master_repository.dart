@@ -9,10 +9,18 @@ class LightMasterRepository {
   // final WledWebSocketClient wledWebSocketClient =
   // WledWebSocketClient(baseUrl: "192.168.0.71");
 
-  Future<List<String>> getEffectsList(LightSource lightSource) {
-    // todo: add cache so list is not fetched everytime
+  final cachedEffectLists = Map<String, List<String>>();
 
-    return wledRestClient.fetchEffects(lightSource.networkAddress);
+  Future<List<String>> getEffectsList(LightSource lightSource) async {
+    if (this.cachedEffectLists.containsKey(lightSource.networkAddress)) {
+      return this.cachedEffectLists[lightSource.networkAddress];
+    } else {
+      var effectsList =
+          await wledRestClient.fetchEffects(lightSource.networkAddress);
+
+      this.cachedEffectLists[lightSource.networkAddress] = effectsList;
+      return effectsList;
+    }
   }
 
   Future<String> getLightSourceName(String networkAddress) async {
@@ -39,16 +47,26 @@ class LightMasterRepository {
         .setWledInstanceState(lightSource.networkAddress, false);
   }
 
-  Future propagateLightSourceLight(LightSource lightSource) {
+  Future propagateLightSourceLight(LightSource lightSource) async {
     if (lightSource.light is SolidLight) {
-      return this.wledRestClient.setSolidLight(
+      await this.wledRestClient.setSolidLight(
           lightSource.networkAddress, lightSource.light as SolidLight);
     } else {
-      return Future.delayed(Duration(seconds: 0));
+      var effectLight = lightSource.light as EffectLight;
 
-      // unsupported..
-      // return this.wledRestClient.setEffectsLight(
-      //     lightSource.networkAddress, lightSource.light as EffectLight);
+      if (!this.cachedEffectLists.containsKey(lightSource.networkAddress)) {
+        await getEffectsList(lightSource);
+      }
+
+      final effectId = this
+          .cachedEffectLists[lightSource.networkAddress]
+          .asMap()
+          .entries
+          .singleWhere((effectEntry) => effectEntry.value == effectLight.effect)
+          .key;
+
+      return this.wledRestClient.setEffectsLight(lightSource.networkAddress,
+          effectId, effectLight.brightness, effectLight.speed);
     }
   }
 }

@@ -9,9 +9,10 @@ import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client
 import 'package:http/http.dart' as http;
 
 /// Provider model that allows to handle Bonsoir discoveries.
-class BonsoirDiscoveryModel extends ChangeNotifier {
+class WLEDDiscoveryModel extends ChangeNotifier {
   final WledRestClient wled = WledRestClient(httpClient: http.Client());
   static const String type = '_http._tcp';
+  final _controller = StreamController<List<LightSource>>();
 
   /// The current Bonsoir discovery object instance.
   BonsoirDiscovery _bonsoirDiscovery;
@@ -23,12 +24,14 @@ class BonsoirDiscoveryModel extends ChangeNotifier {
   StreamSubscription<BonsoirDiscoveryEvent> _subscription;
 
   /// Creates a new Bonsoir discovery model instance.
-  BonsoirDiscoveryModel() {
+  WLEDDiscoveryModel() {
     start();
   }
 
   /// Returns all discovered (and resolved) services.
   List<LightSource> get discoveredServices => List.of(_resolvedServices);
+
+  Stream<List<LightSource>> get discoverWLEDDevices => _controller.stream;
 
   /// Starts the Bonsoir discovery.
   Future<void> start() async {
@@ -59,15 +62,17 @@ class BonsoirDiscoveryModel extends ChangeNotifier {
       try {
         var state = await wled.fetchState(service.ip);
         var mainseg = state['state']['seg'][state['state']['mainseg']];
-        _resolvedServices.add(LightSource(
+        final light = LightSource(
             service.ip,
             state['info']['name'],
             state['state']['on'],
             mainseg['fx'] == 0
-                ? SolidLight(Color.fromRGBO(
-                    mainseg['col'][0], mainseg['col'][1], mainseg['col'][2], 1))
-                : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx'])));
+                ? SolidLight(Color.fromRGBO(mainseg['col'][0][0],
+                    mainseg['col'][0][1], mainseg['col'][0][2], 1))
+                : EffectLight(mainseg['fx'], mainseg['bri'], mainseg['sx']));
+        _resolvedServices.add(light);
         notifyListeners();
+        _controller.sink.add(_resolvedServices);
       } catch (e) {
         log("$service is not a WLED-Instance");
       }
@@ -77,6 +82,7 @@ class BonsoirDiscoveryModel extends ChangeNotifier {
   @override
   void dispose() {
     stop();
+    _controller.close();
     super.dispose();
   }
 }

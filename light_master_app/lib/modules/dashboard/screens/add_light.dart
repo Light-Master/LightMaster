@@ -13,8 +13,6 @@ class AddLight extends StatelessWidget {
       topLeft: const Radius.circular(35), topRight: const Radius.circular(35));
   final addressEditingController = TextEditingController();
 
-  
-
   final debugNetworkAddresses = [
     Tuple2("Instance 1", "8.70.129.107"),
     Tuple2("Instance 2", "195.165.111.105"),
@@ -36,12 +34,20 @@ class AddLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final addLightBloc = BlocProvider.of<AddLightBloc>(context);
-  final devices = BonsoirDiscoveryModel();
-  final startList = devices.discoveredServices;
-  devices.addListener(() {
-    print('Updateed List:');
-    devices.discoveredServices.forEach((item){print(item.toString());});
-  });
+    final devices = WLEDDiscoveryModel();
+    final startList = devices.discoveredServices;
+    devices.addListener(() {
+      print('Updated List:');
+      devices.discoveredServices.forEach((item) {
+        print(item.toString());
+      });
+    });
+    devices.discoverWLEDDevices.listen((event) {
+      print("Stream: ");
+      for (var item in event) {
+        print(item.toString());
+      }
+    });
 
     final managedLightSourceBloc =
         BlocProvider.of<ManagedLightSourceBloc>(context);
