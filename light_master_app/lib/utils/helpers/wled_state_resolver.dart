@@ -4,13 +4,14 @@ import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 
 class WledStateResolver {
-  static Future<LightSource> resolve(String networkAddress,
-      Map<String, dynamic> statusMap, List<String> effectsList) async {
+  static LightSource resolve(
+      String networkAddress, Map<String, dynamic> statusMap) {
     final infoMap = statusMap['info'] as Map<String, dynamic>;
     final name = infoMap['name'] as String;
     final stateMap = statusMap['state'] as Map<String, dynamic>;
     final isTurnedOn = stateMap['on'] as bool;
     final mainSegment = stateMap['seg'][stateMap['mainseg']];
+    final effectsList = stateMap['effects'] as List<String>;
     Light light;
 
     if (mainSegment['fx'] == 0) {
