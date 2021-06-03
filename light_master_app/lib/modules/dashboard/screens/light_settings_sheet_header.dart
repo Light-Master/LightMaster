@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:light_master_app/modules/dashboard/bloc/managed_light_source_bloc.dart';
 import 'package:light_master_app/modules/dashboard/events/managed_light_source_event.dart';
-import 'package:light_master_app/modules/dashboard/models/app_model.dart';
 import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/utils/helpers/color_resolver.dart';
