@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:light_master_app/modules/dashboard/models/light.dart';
 import 'package:light_master_app/modules/dashboard/models/light_source.dart';
 import 'package:light_master_app/modules/dashboard/repositories/wled_rest_client.dart';
 
@@ -38,5 +39,16 @@ class LightMasterRepository {
         .setWledInstanceState(lightSource.networkAddress, false);
   }
 
-  Future propagateLightSourceLight(LightSource lightSource) {}
+  Future propagateLightSourceLight(LightSource lightSource) {
+    if (lightSource.light is SolidLight) {
+      return this.wledRestClient.setSolidLight(
+          lightSource.networkAddress, lightSource.light as SolidLight);
+    } else {
+      return Future.delayed(Duration(seconds: 0));
+
+      // unsupported..
+      // return this.wledRestClient.setEffectsLight(
+      //     lightSource.networkAddress, lightSource.light as EffectLight);
+    }
+  }
 }
