@@ -58,13 +58,11 @@ class EffectsLightSettings extends StatelessWidget {
                                   CupertinoIcons.brightness,
                                   color: sliderIconColor,
                                   size: sliderIconSize,
-                                ), (newBrightness) {
-                          // set new brightness value here
-
-                          // previous code:
-                          lightSource.light = EffectLight(effectLight.effect,
-                              newBrightness, effectLight.speed);
-                        }))
+                                ),
+                                (newBrightness) => applyChangesToLight(
+                                    managedLightSourceBloc,
+                                    newBrightness:
+                                        (newBrightness as double).floor())))
                       ],
                     ),
                     Row(
@@ -78,13 +76,10 @@ class EffectsLightSettings extends StatelessWidget {
                                   CupertinoIcons.speedometer,
                                   color: sliderIconColor,
                                   size: sliderIconSize,
-                                ), (newSpeed) {
-                          // set the new speed value here
-
-                          // previous code:
-                          lightSource.light = EffectLight(effectLight.effect,
-                              effectLight.brightness, newSpeed);
-                        }))
+                                ),
+                                (newSpeed) => applyChangesToLight(
+                                    managedLightSourceBloc,
+                                    newSpeed: (newSpeed as double).floor())))
                       ],
                     )
                   ],
@@ -116,18 +111,9 @@ class EffectsLightSettings extends StatelessWidget {
                             title: Text(
                               currentEffect.toString(),
                             ),
-                            onTap: () {
-                              var effectLight = lightSource.light is EffectLight
-                                  ? lightSource.light as EffectLight
-                                  : defaultEffectLight;
-                              lightSource.light = EffectLight(
-                                  currentEffect.toString(),
-                                  effectLight.brightness,
-                                  effectLight.speed);
-                              managedLightSourceBloc.add(
-                                  ManagedLightSourceChangeColorEvent(
-                                      lightSource));
-                            },
+                            onTap: () => applyChangesToLight(
+                                managedLightSourceBloc,
+                                newEffect: currentEffect),
                             trailing: lightSource.light is EffectLight &&
                                     (lightSource.light as EffectLight).effect ==
                                         currentEffect
@@ -156,5 +142,17 @@ class EffectsLightSettings extends StatelessWidget {
                 );
               })))
     ]);
+  }
+
+  void applyChangesToLight(ManagedLightSourceBloc managedLightSourceBloc,
+      {String newEffect, int newBrightness, int newSpeed}) {
+    var effectLight = lightSource.light is EffectLight
+        ? lightSource.light as EffectLight
+        : defaultEffectLight;
+
+    lightSource.light = EffectLight(newEffect ?? effectLight.effect,
+        newBrightness ?? effectLight.brightness, newSpeed ?? effectLight.speed);
+
+    managedLightSourceBloc.add(ManagedLightSourceChangeColorEvent(lightSource));
   }
 }
