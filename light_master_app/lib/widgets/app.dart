@@ -30,47 +30,6 @@ class App extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    var lightSource =
-        LightSource("192.168.0.71", "So wow", false, SolidLight(Colors.red));
-    var repo = LightMasterRepository();
-    // repo.getEffectsList(lightSource).then(print);
-
-    // repo
-    //     .propagateLightSourceLight(lightSource)
-    //     .then((value) {
-    //       lightSource.light = EffectLight("Wipe", 128, 100);
-    //       return repo.propagateLightSourceLight(lightSource);
-    //     })
-    //     .then((value) => repo.getLightSource("192.168.0.71"))
-    //     .then(printLightSource)
-    //     .then((value) {
-    //       lightSource.light = SolidLight(Colors.red[800]);
-    //       return repo.propagateLightSourceLight(lightSource);
-    //     })
-    //     .then((value) => repo.getLightSource(lightSource.networkAddress))
-    //     .then(printLightSource)
-    //     .then((value) {
-    //       lightSource.light = EffectLight("Rainbow", 255, 10);
-    //       return repo.propagateLightSourceLight(lightSource);
-    //     })
-    //     .then((value) => repo.getLightSource(lightSource.networkAddress))
-    //     .then(printLightSource)
-    //     .then((value) => repo.turnOffLight(lightSource))
-    //     .then((value) => repo.getLightSource(lightSource.networkAddress))
-    //     .then(printLightSource);
-
-    // repo
-    //     .getLightSourceName(lightSource.networkAddress)
-    //     .then(print)
-    //     .then((_) => repo.setLightSourceName(lightSource))
-    //     .then((value) => repo.getLightSourceName(lightSource.networkAddress))
-    //     .then(print);
-
-    repo.getAutoDiscoveredLightSources().listen((list) {
-      list.forEach((element) => print(element.toString()));
-      print("");
-    });
-
     return CupertinoApp(
         theme: const CupertinoThemeData(
           brightness: Brightness.light,
