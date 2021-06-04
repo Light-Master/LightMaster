@@ -54,7 +54,7 @@ content-type: application/json
   "bri": 10,
   "seg": [
     {
-      "fx": 0,
+      "fx": 9,
       "sx": 100
     }
   ]

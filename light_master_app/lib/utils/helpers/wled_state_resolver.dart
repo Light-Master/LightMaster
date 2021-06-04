@@ -11,11 +11,14 @@ class WledStateResolver {
     final stateMap = statusMap['state'] as Map<String, dynamic>;
     final isTurnedOn = stateMap['on'] as bool;
     final mainSegment = stateMap['seg'][stateMap['mainseg']];
-    final testList = statusMap['effects'];
-    // TODO: only use whitelisted
-    final effectsList = testList.cast<String>().toList();
-    Light light;
+    final effectsList = statusMap['effects']
+        .cast<String>()
+        .toList()
+        .where((e) => !effectsBlacklist.contains(e))
+        .toList();
+    effectsList.sort();
 
+    Light light;
     if (mainSegment['fx'] == 0) {
       light = SolidLight(Color.fromRGBO(mainSegment['col'][0][0],
           mainSegment['col'][0][1], mainSegment['col'][0][2], 1));
@@ -29,4 +32,72 @@ class WledStateResolver {
 
     return LightSource(networkAddress, name, isTurnedOn, light, effectsList);
   }
+
+  static List<String> effectsBlacklist = [
+    "Solid",
+    "Android",
+    "Aurora",
+    "Blends",
+    "Blink",
+    "Candle",
+    "Candle Multi",
+    "Chase",
+    "Chase Flash",
+    "Chase Flash Rnd",
+    "Chase Rnd",
+    "Dancing Shadows",
+    "Dissolve",
+    "Dissolve Rnd",
+    "Fade",
+    "Fire Flicker",
+    "Fireworks",
+    "Fireworks 1d",
+    "Gradient",
+    "Heartbeat",
+    "ICU",
+    "Lighthouse",
+    "Lightning",
+    "Loading",
+    "Meteor",
+    "Meteor Smooth",
+    "Multi Comet",
+    "Oscillate",
+    "Percent",
+    "Plasma",
+    "Popcorn",
+    "Railway",
+    "Rain",
+    "Running",
+    "Running 2",
+    "Saw",
+    "Scan",
+    "Scan Dual",
+    "Scanner",
+    "Scanner Dual",
+    "Sine",
+    "Sinelon",
+    "Sinelon Dual",
+    "Solid Glitter",
+    "Solid Pattern",
+    "Solid Pattern Tri",
+    "Sparkle",
+    "Sparkle Dark",
+    "Sparkle+",
+    "Spots",
+    "Spots Fade",
+    "Strobo",
+    "Strobo Mega",
+    "Strobo Rainbow",
+    "Sweep",
+    "Theater",
+    "Tri Chase",
+    "Tri Fade",
+    "Tri Wipe",
+    "Twinkle",
+    "Twinkleup",
+    "Two Areas",
+    "Two Dots",
+    "Washing Machine",
+    "Wipe"
+  ];
 }
