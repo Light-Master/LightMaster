@@ -15,3 +15,5 @@
 	**flutter doctor**
 3. The project has been created and is located inside the light_master_app directory. This was achieved via the flutter create command. To run the app the simulator needs to be running and then type the command flutter run. Afterwards a web interface will be made available that provides valuable insight into the simulated device. This interface' name is printed out in the terminal and accessable via *127.0.0.1:9100?xxxx....*
 
+## Resources:
+- [Appicon by skiffcha on Vecteezy](https://www.vecteezy.com/free-vector/web)
